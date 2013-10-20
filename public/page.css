@@ -3,3 +3,8 @@
     font-size: 16px;
   }
 }
+@media (min-width: 768px) {
+  p.justified {
+    text-align: justify;
+  }
+}

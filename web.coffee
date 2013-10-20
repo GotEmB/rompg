@@ -23,8 +23,13 @@ web.configure ->
 web.get "/", (req, res) ->
 	res.render "home", newsInfo: require "./sampledata/newsInfo"
 
-web.get "/vision", (req, res) ->
-	res.render "vision"
+web.get /\/(.+)/, (req, res, next) ->
+	res.render req.params[0], (err, html) ->
+		next() if err
+		res.send html
+
+web.get "*", (req, res) ->
+	res.render "404"
 
 server = http.createServer web
 

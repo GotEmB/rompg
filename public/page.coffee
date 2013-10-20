@@ -1,8 +1,8 @@
 require.config
 	paths:
-		jquery: "jquery/jquery-2.0.3.min"
-		batman: "batmanjs/batman"
-		bootstrap: "//netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/js/bootstrap.min"
+		jquery: "/jquery/jquery-2.0.3.min"
+		batman: "/batmanjs/batman"
+		bootstrap: "/twbs/bootstrap.min"
 	shim:
 		batman: deps: ["jquery"], exports: "Batman"
 		bootstrap: deps: ["jquery"]

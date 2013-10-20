@@ -5,10 +5,10 @@ html
 	head
 		meta(charset='utf-8')
 		meta(name ="viewport", content = "width=device-width, initial-scale=1, maximum-scale=1")
-		link(rel = "stylesheet", type = "text/css", href = "twbs/bootstrap.min.css")
-		link(rel = "stylesheet", type = "text/css", href = "FortAwesome/css/font-awesome.min.css")
-		link(rel = "stylesheet", type = "text/css", href = "page.css")
-		script(type = "text/javascript", src = "requirejs/require.js", data-main = "page")
+		link(rel = "stylesheet", type = "text/css", href = "/twbs/bootstrap.min.css")
+		link(rel = "stylesheet", type = "text/css", href = "/FortAwesome/css/font-awesome.min.css")
+		link(rel = "stylesheet", type = "text/css", href = "/page.css")
+		script(type = "text/javascript", src = "/requirejs/require.js", data-main = "/page")
 		title #{pageTitle}
 	body(data-context = "appContext", style = "margin-right: 0; padding-top: 70px")
 		nav.navbar.navbar-inverse.navbar-fixed-top(role = "navigation")
@@ -17,11 +17,13 @@ html
 					button.navbar-toggle(type = "button", data-toggle = "collapse", data-target = ".navbar-nv-collapse")
 						- for(var i = 0; i < 3; i++)
 							span.icon-bar
-					a.navbar-brand(href = "/", style = "color: #fff") UCLA JIFRESSE
+					a.navbar-brand(href = (thisPage == "home" ? "#" : "/"), style = "color: #fff") UCLA JIFRESSE
 				.collapse.navbar-collapse.navbar-nv-collapse
 					.nav.navbar-nav
 						li(class = (thisPage == "home" ? "active" : ""))
-							a(href="/") Home
+							a(href = (thisPage == "home" ? "#" : "/")) Home
 						li(class = (thisPage == "vision" ? "active" : ""))
-							a(href="/vision") Vision
+							a(href = (thisPage == "vision" ? "#" : "/vision")) Vision
+						li(class = (thisPage == "people" ? "active" : ""))
+							a(href = (thisPage == "people" ? "#" : "/people/director")) People
 		block content
