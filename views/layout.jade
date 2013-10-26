@@ -17,13 +17,13 @@ html
 					button.navbar-toggle(type = "button", data-toggle = "collapse", data-target = ".navbar-nv-collapse")
 						- for(var i = 0; i < 3; i++)
 							span.icon-bar
-					a.navbar-brand(href = (thisPage == "home" ? "#" : "/"), style = "color: #fff") UCLA JIFRESSE
+					a.navbar-brand(href = (thisPage == "home" ? "#" : "/"), style = "color: #fff") ROMPG
 				.collapse.navbar-collapse.navbar-nv-collapse
 					.nav.navbar-nav
 						li(class = (thisPage == "home" ? "active" : ""))
 							a(href = (thisPage == "home" ? "#" : "/")) Home
-						li(class = (thisPage == "vision" ? "active" : ""))
-							a(href = (thisPage == "vision" ? "#" : "/vision")) Vision
+						li(class = (thisPage == "about" ? "active" : ""))
+							a(href = (thisPage == "about" ? "#" : "/about")) About
 						li(class = (thisPage == "people" ? "active" : ""))
-							a(href = (thisPage == "people" ? "#" : "/people/director")) People
+							a(href = (thisPage == "people" ? "#" : "/people")) People
 		block content

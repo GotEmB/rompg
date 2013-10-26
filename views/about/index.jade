@@ -1,0 +1,27 @@
+extends ../layout
+
+block vars
+	- var pageTitle = "About · Regional Ocean Modeling and Prediction Group"
+	- var thisPage = "about"
+
+block content
+	.container
+		.jumbotron.jumbotron-small
+			h1 About ROMPG
+			p The Regional Ocean Modeling and Prediction Group is a collaboration between Remote Sensing Solutions, Inc. and UCLA Joint Institute for Regional Earth System Science and Engineering (JIFRESSE) to improve understanding and to develop projections about regional ocean and environments.
+		.row
+			.col-sm-6.col-md-5.col-md-offset-1.col-lg-4.col-lg-offset-2
+				.panel.panel-default
+					address.panel-body
+						strong Remote Sensing Solutions, Inc.<br>
+						| 2824 East Foothill Blvd<br>
+						| Pasadena, CA 91107<br>
+						a(href = "http://www.remotesensingsolutions.com", target = "_blank") http://www.remotesensingsolutions.com
+			.col-sm-6.col-md-5.col-lg-4
+				.panel.panel-default
+					address.panel-body(style = "margin-bottom: 0")
+						strong UCLA - JIFRESSE<br>
+						| 607 Charles E Young Drive East<br>
+						| Young Hall, Room 4242<br>
+						| Los Angeles, CA  90095-7228<br>
+						a(href = "https://jifresse.ucla.edu", target = "_blank") https://jifresse.ucla.edu
