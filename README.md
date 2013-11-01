@@ -1,4 +1,4 @@
-jifresse
-========
+rompg
+=====
 
-Joint Institute for Regional Earth System Science &amp; Engineering
+Regional Ocean Modeling and Prediction Group at UCLA JIFRESSE
