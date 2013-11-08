@@ -35,4 +35,4 @@ server = http.createServer web
 
 mongoose.connection.once "open", ->
 	console.log "Connected to MongoDB"
-	server.listen (port = process.env.PORT ? 5080), -> console.log "Listening on port #{port}"
+	server.listen (port = process.env.ROMPG_PORT ? 5080), -> console.log "Listening on port #{port}"
