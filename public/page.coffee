@@ -28,7 +28,7 @@ require ["jquery", "Batman", "bootstrap", "bootstrapDatepicker"], ($, Batman) ->
 				now = new Date
 				now.setDate now.getDate() - 1 if Math.floor((now.getUTCHours() - 3) / 6) < 0
 				time = ((Math.floor (now.getUTCHours() - 3) / 6 + 4) % 4) * 6 + 3
-				@set "latestCaRomsImagePath", "/data/ca-roms/#{now.getUTCFullYear()}/#{@get("latestDate").getUTCMonth() + 1}/ca_curr#{now.getUTCMonth() + 1}#{now.getUTCDate()}_#{if time < 10 then "0" + time else time}_0.jpg"
+				@set "latestCaRomsImagePath", "/data/ca-roms/#{now.getUTCFullYear()}/#{now.getUTCMonth() + 1}/ca_curr#{now.getUTCMonth() + 1}#{now.getUTCDate()}_#{if time < 10 then "0" + time else time}_0.jpg"
 				@set "latestCaRomsImageError", false
 			latestCaRomsImageError: ->
 				@set "latestCaRomsImageError", true
