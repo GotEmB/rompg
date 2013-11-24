@@ -28,7 +28,7 @@ require ["jquery", "Batman", "bootstrap", "bootstrapDatepicker"], ($, Batman) ->
 				now = new Date
 				now.setDate now.getDate() - 1 if Math.floor((now.getUTCHours() - 3) / 6) < 0
 				time = ((Math.floor (now.getUTCHours() - 3) / 6 + 4) % 4) * 6 + 3
-				@set "latestCaRomsImagePath", "/data/ca-roms/#{now.getUTCFullYear()}/ca_curr#{now.getUTCMonth() + 1}#{now.getUTCDate()}_#{if time < 10 then "0" + time else time}_0.jpg"
+				@set "latestCaRomsImagePath", "/data/ca-roms/#{now.getUTCFullYear()}/#{@get("latestDate").getUTCMonth() + 1}/ca_curr#{now.getUTCMonth() + 1}#{now.getUTCDate()}_#{if time < 10 then "0" + time else time}_0.jpg"
 				@set "latestCaRomsImageError", false
 			latestCaRomsImageError: ->
 				@set "latestCaRomsImageError", true
@@ -49,7 +49,7 @@ require ["jquery", "Batman", "bootstrap", "bootstrapDatepicker"], ($, Batman) ->
 				@accessor "is09Selected", -> @get("latestTime") is "09 UTC"
 				@accessor "is15Selected", -> @get("latestTime") is "15 UTC"
 				@accessor "is21Selected", -> @get("latestTime") is "21 UTC"
-				@accessor "imgPath", -> "/data/ca-roms/#{@get("latestDate").getUTCFullYear()}/ca_#{varMap[@get "variable"]}#{@get("latestDate").getUTCMonth() + 1}#{@get("latestDate").getUTCDate()}_#{@get("latestTime").match(/^[0-9]+/g)[0]}_0.jpg"
+				@accessor "imgPath", -> "/data/ca-roms/#{@get("latestDate").getUTCFullYear()}/#{@get("latestDate").getUTCMonth() + 1}/ca_#{varMap[@get "variable"]}#{@get("latestDate").getUTCMonth() + 1}#{@get("latestDate").getUTCDate()}_#{@get("latestTime").match(/^[0-9]+/g)[0]}_0.jpg"
 				@accessor "isCurr", -> @get("variable") is "Current"
 				@accessor "isSalinity", -> @get("variable") is "Salinity and Current"
 				@accessor "isSSH", -> @get("variable") is "Sea Surface Height and Current"
