@@ -57,7 +57,7 @@ require(["jquery", "Batman", "bootstrap", "bootstrapDatepicker"], function($, Ba
           now.setDate(now.getDate() - 1);
         }
         time = ((Math.floor((now.getUTCHours() - 3) / 6 + 4)) % 4) * 6 + 3;
-        this.set("latestCaRomsImagePath", "/data/ca-roms/" + (now.getUTCFullYear()) + "/" + (this.get("latestDate").getUTCMonth() + 1) + "/ca_curr" + (now.getUTCMonth() + 1) + (now.getUTCDate()) + "_" + (time < 10 ? "0" + time : time) + "_0.jpg");
+        this.set("latestCaRomsImagePath", "/data/ca-roms/" + (now.getUTCFullYear()) + "/" + (now.getUTCMonth() + 1) + "/ca_curr" + (now.getUTCMonth() + 1) + (now.getUTCDate()) + "_" + (time < 10 ? "0" + time : time) + "_0.jpg");
         this.set("latestCaRomsImageError", false);
       }
 
