@@ -22,7 +22,7 @@ web.configure ->
 	web.use web.router
 
 web.get "/", (req, res) ->
-	res.render "home", newsInfo: require "./sampledata/newsInfo"
+	res.render "home"
 
 web.get /\/([a-z]+)/, (req, res, next) ->
 	res.render req.params[0], (err, html) ->
