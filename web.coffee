@@ -16,6 +16,7 @@ web.configure ->
 	web.use express.compress()
 	web.use express.bodyParser()
 	web.use express.static "#{__dirname}/public", maxAge: 0, (err) -> console.log "Static: #{err}"
+	web.use "/data/ca-roms", express.static "#{__dirname}/sampledata", maxAge: 0, (err) -> console.log "Static: #{err}"
 	web.set "views", "#{__dirname}/views"
 	web.set "view engine", "jade"
 	web.use web.router
@@ -23,7 +24,7 @@ web.configure ->
 web.get "/", (req, res) ->
 	res.render "home", newsInfo: require "./sampledata/newsInfo"
 
-web.get /\/(.+)/, (req, res, next) ->
+web.get /\/([a-z]+)/, (req, res, next) ->
 	res.render req.params[0], (err, html) ->
 		next() if err
 		res.send html
