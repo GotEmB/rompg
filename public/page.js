@@ -57,7 +57,7 @@ require(["jquery", "Batman", "bootstrap", "bootstrapDatepicker"], function($, Ba
           now.setDate(now.getDate() - 1);
         }
         time = ((Math.floor((now.getUTCHours() - 3) / 6 + 4)) % 4) * 6 + 3;
-        this.set("latestCaRomsImagePath", "/data/ca-roms/" + (now.getUTCFullYear()) + "/ca_curr" + (now.getUTCMonth() + 1) + (now.getUTCDate()) + "_" + (time < 10 ? "0" + time : time) + "_0.jpg");
+        this.set("latestCaRomsImagePath", "/data/ca-roms/" + (now.getUTCFullYear()) + "/" + (this.get("latestDate").getUTCMonth() + 1) + "/ca_curr" + (now.getUTCMonth() + 1) + (now.getUTCDate()) + "_" + (time < 10 ? "0" + time : time) + "_0.jpg");
         this.set("latestCaRomsImageError", false);
       }
 
@@ -107,7 +107,7 @@ require(["jquery", "Batman", "bootstrap", "bootstrapDatepicker"], function($, Ba
         });
 
         CaRoms.accessor("imgPath", function() {
-          return "/data/ca-roms/" + (this.get("latestDate").getUTCFullYear()) + "/ca_" + varMap[this.get("variable")] + (this.get("latestDate").getUTCMonth() + 1) + (this.get("latestDate").getUTCDate()) + "_" + (this.get("latestTime").match(/^[0-9]+/g)[0]) + "_0.jpg";
+          return "/data/ca-roms/" + (this.get("latestDate").getUTCFullYear()) + "/" + (this.get("latestDate").getUTCMonth() + 1) + "/ca_" + varMap[this.get("variable")] + (this.get("latestDate").getUTCMonth() + 1) + (this.get("latestDate").getUTCDate()) + "_" + (this.get("latestTime").match(/^[0-9]+/g)[0]) + "_0.jpg";
         });
 
         CaRoms.accessor("isCurr", function() {
