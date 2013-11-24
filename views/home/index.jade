@@ -5,51 +5,16 @@ block vars
 	- var thisPage = "home"
 
 block content
-	.container
+	.container(data-context = "homeContext")
 		.jumbotron
 			h1 Welcome
 			p This is the <strong>Regional Ocean Modeling and Prediction Group</strong> at UCLA JIFRESSE. To get to know more about ROMPG, check out the <a href="/about">About</a> section.
 		.row
-			.col-sm-6
-				.panel.panel-default
-					.panel-body
-						br
-						br
-						br
-						br
-						p.lead.text-center(style = "opacity: 0.5") California ROMS
-						br
-						br
-						br
-				.panel.panel-default
-					.panel-body
-						br
-						br
-						br
-						br
-						p.lead.text-center(style = "opacity: 0.5") Gulf of Mexico ROMS
-						br
-						br
-						br
-			.col-sm-6
-				.panel.panel-default
-					.panel-body
-						br
-						br
-						br
-						br
-						p.lead.text-center(style = "opacity: 0.5") PWS ROMS
-						br
-						br
-						br
-				.panel.panel-default
-					.panel-body
-						br
-						br
-						br
-						br
-						p.lead.text-center(style = "opacity: 0.5") San Francisco Bay SELFE
-						br
-						br
-						br
-				
+			.col-md-8.col-md-offset-2
+				.panel.panel-default(style = "overflow: hidden")
+					.panel-heading
+						h3.panel-title.text-center CA-ROMS
+					.panel-body.text-center
+						a(href = "/roms")
+							img(data-bind-src = "latestCaRomsImagePath", data-event-error = "appContext.homeContext.latestCaRomsImageError", data-hideif = "latestCaRomsImageError", style = "max-width: 100%")
+							.lead(data-showif = "latestCaRomsImageError", style = "margin-bottom: 0") Data not found

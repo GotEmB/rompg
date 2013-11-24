@@ -13,6 +13,9 @@ results
 
 npm-debug.log
 node_modules
+sampledata
+public/components
 
+results-*.html
 .DS_Store
 .env

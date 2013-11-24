@@ -1,0 +1,9 @@
+{
+  "name": "rompg",
+  "dependencies": {
+    "bootstrap": "~3.0",
+    "bootstrap-datepicker": "4e03b4cb9fcb379c346aad378056640df2ce1316",
+    "font-awesome": "~4.0.3",
+    "requirejs": "~2.1.9"
+  }
+}

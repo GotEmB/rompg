@@ -1,0 +1,53 @@
+extends ../layout
+
+block vars
+	- var pageTitle = "ROMS · Regional Ocean Modeling and Prediction Group"
+	- var thisPage = "roms"
+
+block content
+	.container(data-context = "romsContext")
+		.jumbotron
+			h1 ROMS
+			p Some description about ROMS in general.
+		ul.nav.nav-tabs
+			li.active
+				a(src = "#ca-roms", data-toggle = "tab") California
+		br
+		.tab-content
+			#ca-roms.tab-pane.active(data-context = "caRoms")
+				.row
+					.col-md-4.col-lg-3
+						.panel.panel-default
+							.panel-body
+								.btn-group.btn-block
+									button.btn.btn-primary.btn-block.dropdown-toggle(data-toggle = "dropdown")
+										span(data-bind = "variable")
+										| 
+										i.fa.fa-caret-down
+									ul.dropdown-menu(role = "menu")
+										li(data-value = "Current" data-event-click = "appContext.romsContext.caRoms.variableChanged", data-addclass-active = "isCurr")
+											a(href = "#") Current
+										li(data-value = "Salinity and Current" data-event-click = "appContext.romsContext.caRoms.variableChanged", data-addclass-active = "isSalinity")
+											a(href = "#") Salinity and Current
+										li(data-value = "Sea Surface Height and Current" data-event-click = "appContext.romsContext.caRoms.variableChanged", data-addclass-active = "isSSH")
+											a(href = "#") Sea Surface Height and Current
+										li(data-value = "Temperature and Current" data-event-click = "appContext.romsContext.caRoms.variableChanged", data-addclass-active = "isTemp")
+											a(href = "#") Temperature and Current
+								.text-center
+									div(data-provide = "datepicker-inline", data-date-start-date = "10/21/2013", data-date-end-date = "Sat Nov 22 2013", style = "display: inline-block")
+									.btn-group(data-toggle = "buttons")
+										button.btn.btn-default.btn-xs(data-addclass-active = "is03Selected", data-value = "03 UTC", data-event-click = "appContext.romsContext.caRoms.timeChanged")
+											input(type = "radio")
+											| 03 UTC
+										button.btn.btn-default.btn-xs(data-addclass-active = "is09Selected", data-value = "09 UTC", data-event-click = "appContext.romsContext.caRoms.timeChanged")
+											input(type = "radio")
+											| 09 UTC
+										button.btn.btn-default.btn-xs(data-addclass-active = "is15Selected", data-value = "15 UTC", data-event-click = "appContext.romsContext.caRoms.timeChanged")
+											input(type = "radio")
+											| 15 UTC
+										button.btn.btn-default.btn-xs(data-addclass-active = "is21Selected", data-value = "21 UTC", data-event-click = "appContext.romsContext.caRoms.timeChanged")
+											input(type = "radio")
+											| 21 UTC
+					.col-md-8.col-lg-9.text-center
+						img(data-bind-src = "imgPath", data-event-error = "appContext.romsContext.caRoms.imageError", data-event-load = "appContext.romsContext.caRoms.imageLoad", data-hideif = "imageError", style = "max-width: 100%")
+						.lead(data-showif = "imageError", style = "margin-bottom: 0") Data not found

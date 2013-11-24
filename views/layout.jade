@@ -5,10 +5,13 @@ html
 	head
 		meta(charset='utf-8')
 		meta(name ="viewport", content = "width=device-width, initial-scale=1, maximum-scale=1")
-		link(rel = "stylesheet", type = "text/css", href = "/twbs/bootstrap.min.css")
-		link(rel = "stylesheet", type = "text/css", href = "/FortAwesome/css/font-awesome.min.css")
+		link(rel = "stylesheet", type = "text/css", href = "/components/bootstrap/dist/css/bootstrap.min.css")
+		link(rel = "stylesheet", type = "text/css", href = "/components/bootstrap-datepicker/css/datepicker.css")
+		link(rel = "stylesheet", type = "text/css", href = "/components/bootstrap-datepicker/css/datepicker3.css")
+		link(rel = "stylesheet", type = "text/css", href = "/components/font-awesome/css/font-awesome.min.css")
 		link(rel = "stylesheet", type = "text/css", href = "/page.css")
-		script(type = "text/javascript", src = "/requirejs/require.js", data-main = "/page")
+		script(type = "text/javascript", src = "/components/requirejs/require.js", data-main = "/page")
+		script (function(i){'use strict';function d(c,b,e){return c[b]||(c[b]=e())}return d(d(i,"angular",Object),"module",function(){var c={};return function(b,e,f){e&&c.hasOwnProperty(b)&&(c[b]=null);return d(c,b,function(){function a(a,b,d){return function(){c[d||"push"]([a,b,arguments]);return g}}if(!e)throw Error("No module: "+b);var c=[],d=[],h=a("$injector","invoke"),g={_invokeQueue:c,_runBlocks:d,requires:e,name:b,provider:a("$provide","provider"),factory:a("$provide","factory"),service:a("$provide","service"), value:a("$provide","value"),constant:a("$provide","constant","unshift"),filter:a("$filterProvider","register"),controller:a("$controllerProvider","register"),directive:a("$compileProvider","directive"),config:h,run:function(a){d.push(a);return this}};f&&h(f);return g})}})})(window);
 		title #{pageTitle}
 	body(data-context = "appContext", style = "margin-right: 0; padding-top: 70px")
 		nav.navbar.navbar-inverse.navbar-fixed-top(role = "navigation")
@@ -19,7 +22,7 @@ html
 							span.icon-bar
 					a.navbar-brand(href = (thisPage == "home" ? "#" : "/"), style = "color: #fff") ROMPG
 				.collapse.navbar-collapse.navbar-nv-collapse
-					.nav.navbar-nav
+					ul.nav.navbar-nav
 						li(class = (thisPage == "home" ? "active" : ""))
 							a(href = (thisPage == "home" ? "#" : "/")) Home
 						li(class = (thisPage == "about" ? "active" : ""))
@@ -28,4 +31,6 @@ html
 							a(href = (thisPage == "people" ? "#" : "/people")) People
 						li(class = (thisPage == "blog" ? "active" : ""))
 							a(href = (thisPage == "blog" ? "#" : "//west.rssoffice.com:9081")) Blog
+						li(class = (thisPage == "roms" ? "active" : ""))
+							a(href = (thisPage == "roms" ? "#" : "/roms")) ROMS
 		block content
