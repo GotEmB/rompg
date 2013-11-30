@@ -1,14 +1,6 @@
 express = require "express"
 http = require "http"
-mongoose = require "mongoose"
-
-mongoose.connect process.env.MONGODBSTR
-mongoose.connection.once "error", ->
-	console.error "Mongo Error: ", arguments
-	process.exit 1
-
-Task = mongoose.model "Task",
-	taskId: String
+core = require "./core"
 
 web = express()
 web.configure ->
@@ -24,6 +16,9 @@ web.configure ->
 web.get "/", (req, res) ->
 	res.render "home"
 
+web.get "/latestROMS.json", (req, res) ->
+	res.jsonp core.getLatestROMS()
+
 web.get /\/([a-z]+)/, (req, res, next) ->
 	res.render req.params[0], (err, html) ->
 		next() if err
@@ -34,6 +29,4 @@ web.get "*", (req, res) ->
 
 server = http.createServer web
 
-mongoose.connection.once "open", ->
-	console.log "Connected to MongoDB"
-	server.listen (port = process.env.PORT ? 5080), -> console.log "Listening on port #{port}"
+server.listen (port = process.env.PORT ? 5080), -> console.log "Listening on port #{port}"

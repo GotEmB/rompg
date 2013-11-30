@@ -8,7 +8,8 @@ require.config({
     jquery: "/components/jquery/jquery.min",
     bootstrap: "/components/bootstrap/dist/js/bootstrap.min",
     bootstrapDatepicker: "/components/bootstrap-datepicker/js/bootstrap-datepicker",
-    batman: "batmanjs/batman"
+    batman: "/batmanjs/batman",
+    latestROMS: "/latestROMS.json?callback=define"
   },
   shim: {
     bootstrap: {
@@ -31,8 +32,15 @@ define("Batman", ["batman"], function(Batman) {
   return Batman.DOM.readers.batmantarget = Batman.DOM.readers.target && delete Batman.DOM.readers.target && Batman;
 });
 
-require(["jquery", "Batman", "bootstrap", "bootstrapDatepicker"], function($, Batman) {
-  var AppContext, Rompg, _ref;
+require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], function($, Batman, latestROMS) {
+  var AppContext, Rompg, padTo2Digits, _ref;
+  padTo2Digits = function(n) {
+    if (n < 10) {
+      return "0" + n;
+    } else {
+      return n;
+    }
+  };
   AppContext = (function(_super) {
     __extends(AppContext, _super);
 
@@ -50,132 +58,121 @@ require(["jquery", "Batman", "bootstrap", "bootstrapDatepicker"], function($, Ba
       __extends(HomeContext, _super1);
 
       function HomeContext() {
-        var now, time;
+        var now, variable, _i, _len, _ref;
         HomeContext.__super__.constructor.apply(this, arguments);
-        now = new Date;
-        if (Math.floor((now.getUTCHours() - 3) / 6) < 0) {
-          now.setDate(now.getDate() - 1);
+        _ref = ["curr", "salinity", "ssh", "temp"];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          variable = _ref[_i];
+          now = new Date(latestROMS.ca[variable]);
+          this.set("latestCaRomsImagePath_" + variable, "/data/ca-roms/" + (now.getUTCFullYear()) + "/ca_" + variable + (padTo2Digits(now.getUTCMonth() + 1)) + (padTo2Digits(now.getUTCDate())) + "_" + (padTo2Digits(now.getUTCHours())) + "_0.jpg");
         }
-        time = ((Math.floor((now.getUTCHours() - 3) / 6 + 4)) % 4) * 6 + 3;
-        this.set("latestCaRomsImagePath", "/data/ca-roms/" + (now.getUTCFullYear()) + "/ca_curr" + (now.getUTCMonth() + 1) + (now.getUTCDate()) + "_" + (time < 10 ? "0" + time : time) + "_0.jpg");
-        this.set("latestCaRomsImageError", false);
       }
-
-      HomeContext.prototype.latestCaRomsImageError = function() {
-        return this.set("latestCaRomsImageError", true);
-      };
 
       return HomeContext;
 
     })(Batman.Model);
 
     AppContext.prototype.RomsContext = (function(_super1) {
+      var varMap,
+        _this = this;
+
       __extends(RomsContext, _super1);
 
+      varMap = {
+        curr: "Current",
+        salinity: "Salinity and Current",
+        ssh: "Sea Surface Height and Current",
+        temp: "Temperature and Current"
+      };
+
+      RomsContext.accessor("is03Selected", function() {
+        return this.get("latestTime") === "03 UTC";
+      });
+
+      RomsContext.accessor("is09Selected", function() {
+        return this.get("latestTime") === "09 UTC";
+      });
+
+      RomsContext.accessor("is15Selected", function() {
+        return this.get("latestTime") === "15 UTC";
+      });
+
+      RomsContext.accessor("is21Selected", function() {
+        return this.get("latestTime") === "21 UTC";
+      });
+
+      RomsContext.accessor("imgPath", function() {
+        return "/data/ca-roms/" + (now.getUTCFullYear()) + "/" + (RomsContext.get("region")) + "_" + (RomsContext.get("variable")) + (padTo2Digits(now.getUTCMonth() + 1)) + (padTo2Digits(now.getUTCDate())) + "_" + (padTo2Digits(now.getUTCHours())) + "_0.jpg";
+      });
+
+      RomsContext.accessor("isCurr", function() {
+        return this.get("variable") === "Current";
+      });
+
+      RomsContext.accessor("isSalinity", function() {
+        return this.get("variable") === "Salinity and Current";
+      });
+
+      RomsContext.accessor("isSSH", function() {
+        return this.get("variable") === "Sea Surface Height and Current";
+      });
+
+      RomsContext.accessor("isTemp", function() {
+        return this.get("variable") === "Temperature and Current";
+      });
+
       function RomsContext() {
+        var _this = this;
         RomsContext.__super__.constructor.apply(this, arguments);
-        this.set("currentTab", "caRoms");
-        this.set("caRoms", new this.CaRoms);
+        if (varMap[window.location.hash.slice(1)] != null) {
+          this.set("variable", window.location.hash.slice(1));
+        } else {
+          this.set("variable", "curr");
+        }
+        this.set("region", "ca");
+        $("[data-provide=\"datepicker-inline\"]").on("changeDate", function(e) {
+          var now;
+          e.date.setMilliseconds(e.date.getMilliseconds() - e.date.getTimezoneOffset() * 60 * 1000);
+          now = _this.get("now");
+          now.setDate(e.date.getDate());
+          now.setMonth(e.date.getMonth());
+          return now.setFullYear(e.date.getFullYear());
+        });
+        this.set("variable", "Current");
       }
 
-      RomsContext.prototype.CaRoms = (function(_super2) {
-        var varMap;
+      RomsContext.prototype.timeChanged = function(node) {
+        return this.get("now").setHours($(node).attr("data-value"));
+      };
 
-        __extends(CaRoms, _super2);
-
-        varMap = {
-          "Current": "curr",
-          "Salinity and Current": "salinity",
-          "Sea Surface Height and Current": "ssh",
-          "Temperature and Current": "temp"
-        };
-
-        CaRoms.accessor("is03Selected", function() {
-          return this.get("latestTime") === "03 UTC";
-        });
-
-        CaRoms.accessor("is09Selected", function() {
-          return this.get("latestTime") === "09 UTC";
-        });
-
-        CaRoms.accessor("is15Selected", function() {
-          return this.get("latestTime") === "15 UTC";
-        });
-
-        CaRoms.accessor("is21Selected", function() {
-          return this.get("latestTime") === "21 UTC";
-        });
-
-        CaRoms.accessor("imgPath", function() {
-          return "/data/ca-roms/" + (this.get("latestDate").getUTCFullYear()) + "/ca_" + varMap[this.get("variable")] + (this.get("latestDate").getUTCMonth() + 1) + (this.get("latestDate").getUTCDate()) + "_" + (this.get("latestTime").match(/^[0-9]+/g)[0]) + "_0.jpg";
-        });
-
-        CaRoms.accessor("isCurr", function() {
-          return this.get("variable") === "Current";
-        });
-
-        CaRoms.accessor("isSalinity", function() {
-          return this.get("variable") === "Salinity and Current";
-        });
-
-        CaRoms.accessor("isSSH", function() {
-          return this.get("variable") === "Sea Surface Height and Current";
-        });
-
-        CaRoms.accessor("isTemp", function() {
-          return this.get("variable") === "Temperature and Current";
-        });
-
-        function CaRoms() {
-          var now, time,
-            _this = this;
-          CaRoms.__super__.constructor.apply(this, arguments);
-          now = new Date;
-          if (Math.floor((now.getUTCHours() - 3) / 6) < 0) {
-            now.setDate(now.getDate() - 1);
-          }
-          this.changeDate(now);
-          time = ((Math.floor((now.getUTCHours() - 3) / 6 + 4)) % 4) * 6 + 3;
-          this.set("latestTime", "" + (time < 10 ? "0" + time : time) + " UTC");
-          $("[data-provide=\"datepicker-inline\"]").on("changeDate", function(e) {
-            e.date.setMilliseconds(e.date.getMilliseconds() - e.date.getTimezoneOffset() * 60 * 1000);
-            return _this.set("latestDate", e.date);
-          });
-          this.set("variable", "Current");
+      RomsContext.prototype.changeTime = function(time) {
+        var node;
+        node = $("[data-value=\"" + time + "\"]")[0];
+        if (!$(node).hasClass("active")) {
+          return $(node).button("toggle");
         }
+      };
 
-        CaRoms.prototype.timeChanged = function(node) {
-          return this.set("latestTime", $(node).attr("data-value"));
-        };
+      RomsContext.prototype.changeDate = function(date) {
+        var hd;
+        this.set("now", date);
+        $("[data-provide=\"datepicker-inline\"]").datepicker("update", "" + (date.getMonth() + 1) + "/" + (date.getDate()) + "/" + (date.getFullYear()));
+        if (!$(hd).hasClass("active")) {
+          return $(hd = "[data-value=\"" + (date.getHours()) + "\"]").button("toggle");
+        }
+      };
 
-        CaRoms.prototype.changeTime = function(time) {
-          var node;
-          node = $("[data-value=\"" + time + "\"]")[0];
-          if (!$(node).hasClass("active")) {
-            return $(node).button("toggle");
-          }
-        };
+      RomsContext.prototype.imageError = function() {
+        return this.set("imageError", true);
+      };
 
-        CaRoms.prototype.changeDate = function(date) {
-          this.set("latestDate", date);
-          return $("[data-provide=\"datepicker-inline\"]").datepicker("update", "" + (date.getUTCMonth() + 1) + "/" + (date.getUTCDate()) + "/" + (date.getUTCFullYear()));
-        };
+      RomsContext.prototype.imageLoad = function() {
+        return this.set("imageError", false);
+      };
 
-        CaRoms.prototype.imageError = function() {
-          return this.set("imageError", true);
-        };
-
-        CaRoms.prototype.imageLoad = function() {
-          return this.set("imageError", false);
-        };
-
-        CaRoms.prototype.variableChanged = function(node) {
-          return this.set("variable", $(node).attr("data-value"));
-        };
-
-        return CaRoms;
-
-      })(Batman.Model);
+      RomsContext.prototype.variableChanged = function(node) {
+        return this.set("variable", $(node).attr("data-value"));
+      };
 
       return RomsContext;
 
