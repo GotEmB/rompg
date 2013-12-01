@@ -113,7 +113,7 @@ require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
       });
 
       RomsContext.accessor("imgPath", function() {
-        return "/data/ca-roms/" + (this.get("now").getUTCFullYear()) + "/" + (now.getUTCMonth() + 1) + "/" + (this.get("region")) + "_" + (this.get("variable")) + (padTo2Digits(this.get("now").getUTCMonth() + 1)) + (padTo2Digits(this.get("now").getUTCDate())) + "_" + (padTo2Digits(this.get("now").getUTCHours())) + "_0.jpg";
+        return "/data/ca-roms/" + (this.get("now").getUTCFullYear()) + "/" + (this.get("now").getUTCMonth() + 1) + "/" + (this.get("region")) + "_" + (this.get("variable")) + (padTo2Digits(this.get("now").getUTCMonth() + 1)) + (padTo2Digits(this.get("now").getUTCDate())) + "_" + (padTo2Digits(this.get("now").getUTCHours())) + "_0.jpg";
       });
 
       RomsContext.accessor("regionLongName", function() {

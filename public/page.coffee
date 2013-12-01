@@ -48,7 +48,7 @@ require ["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
 			@accessor "is09Selected", -> @get("now").getUTCHours() is 9
 			@accessor "is15Selected", -> @get("now").getUTCHours() is 15
 			@accessor "is21Selected", -> @get("now").getUTCHours() is 21
-			@accessor "imgPath", -> "/data/ca-roms/#{@get("now").getUTCFullYear()}/#{now.getUTCMonth() + 1}/#{@get "region"}_#{@get "variable"}#{padTo2Digits @get("now").getUTCMonth() + 1}#{padTo2Digits @get("now").getUTCDate()}_#{padTo2Digits @get("now").getUTCHours()}_0.jpg"
+			@accessor "imgPath", -> "/data/ca-roms/#{@get("now").getUTCFullYear()}/#{@get("now").getUTCMonth() + 1}/#{@get "region"}_#{@get "variable"}#{padTo2Digits @get("now").getUTCMonth() + 1}#{padTo2Digits @get("now").getUTCDate()}_#{padTo2Digits @get("now").getUTCHours()}_0.jpg"
 			@accessor "regionLongName", -> $("ul>li[data-value=\"#{@get "region"}\"]>a").text()
 			for region of latestROMS then do (region) =>
 				@accessor "is_#{region}", -> @get("region") is region
