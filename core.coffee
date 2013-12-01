@@ -19,3 +19,18 @@ exports.getLatestROMS = ->
 				ret[region] ?= {}
 				ret[region][variable] = now
 	ret
+
+exports.getAvailableRegions = ->
+	regionMap =
+		ca: "California"
+		cc: "Central and Northern California"
+		ccc: "Central California"
+		mb: "Monterey Bay"
+		sfb: "San Francisco Bay"
+		nc1: "North Coast I"
+		nc2: "North Coast II"
+	latestRoms = exports.getLatestROMS()
+	ret = []
+	for shortCode, longName of regionMap
+		ret.push shortCode: shortCode, longName: longName if latestRoms[shortCode]?
+	ret

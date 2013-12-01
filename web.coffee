@@ -16,6 +16,9 @@ web.configure ->
 web.get "/", (req, res) ->
 	res.render "home"
 
+web.get "/roms", (req, res) ->
+	res.render "roms", availableRegions: core.getAvailableRegions()
+
 web.get "/latestROMS.json", (req, res) ->
 	res.jsonp core.getLatestROMS()
 
