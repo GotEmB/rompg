@@ -8,46 +8,51 @@ block content
 	.container(data-context = "romsContext")
 		.jumbotron
 			h1 ROMS
-			p Some description about ROMS in general.
-		ul.nav.nav-tabs
-			li.active
-				a(src = "#ca-roms", data-toggle = "tab") California
-		br
-		.tab-content
-			#ca-roms.tab-pane.active(data-context = "caRoms")
-				.row
-					.col-md-4.col-lg-3
-						.panel.panel-default
-							.panel-body
-								.btn-group.btn-block
-									button.btn.btn-primary.btn-block.dropdown-toggle(data-toggle = "dropdown")
-										span(data-bind = "variable")
-										| 
-										i.fa.fa-caret-down
-									ul.dropdown-menu(role = "menu")
-										li(data-value = "Current" data-event-click = "appContext.romsContext.caRoms.variableChanged", data-addclass-active = "isCurr")
-											a(href = "#") Current
-										li(data-value = "Salinity and Current" data-event-click = "appContext.romsContext.caRoms.variableChanged", data-addclass-active = "isSalinity")
-											a(href = "#") Salinity and Current
-										li(data-value = "Sea Surface Height and Current" data-event-click = "appContext.romsContext.caRoms.variableChanged", data-addclass-active = "isSSH")
-											a(href = "#") Sea Surface Height and Current
-										li(data-value = "Temperature and Current" data-event-click = "appContext.romsContext.caRoms.variableChanged", data-addclass-active = "isTemp")
-											a(href = "#") Temperature and Current
-								.text-center
-									div(data-provide = "datepicker-inline", style = "display: inline-block")
-									.btn-group(data-toggle = "buttons")
-										button.btn.btn-default.btn-xs(data-addclass-active = "is03Selected", data-value = "03 UTC", data-event-click = "appContext.romsContext.caRoms.timeChanged")
-											input(type = "radio")
-											| 03 UTC
-										button.btn.btn-default.btn-xs(data-addclass-active = "is09Selected", data-value = "09 UTC", data-event-click = "appContext.romsContext.caRoms.timeChanged")
-											input(type = "radio")
-											| 09 UTC
-										button.btn.btn-default.btn-xs(data-addclass-active = "is15Selected", data-value = "15 UTC", data-event-click = "appContext.romsContext.caRoms.timeChanged")
-											input(type = "radio")
-											| 15 UTC
-										button.btn.btn-default.btn-xs(data-addclass-active = "is21Selected", data-value = "21 UTC", data-event-click = "appContext.romsContext.caRoms.timeChanged")
-											input(type = "radio")
-											| 21 UTC
-					.col-md-8.col-lg-9.text-center
-						img(data-bind-src = "imgPath", data-event-error = "appContext.romsContext.caRoms.imageError", data-event-load = "appContext.romsContext.caRoms.imageLoad", data-hideif = "imageError", style = "max-width: 100%")
-						.lead(data-showif = "imageError", style = "margin-bottom: 0; display: none") Data not found
+			p The California Coastal Ocean (CA) nowcasting and forecasting system is based on the Regional Ocean Modeling System (ROMS). The domain encompasses the entire California coastal region out to about 1000 km offshore, with a horizontal resolution of approximately 3 km and 40 vertical levels. A multi-scale three-dimensional variational data assimilation (MS-3DVAR) methodology is used to produce the nowcast output shown here. A nowcast (or analysis) is produced every 6 hours at 03, 09, 15 and 21 UTC.
+		div(style = "display: none", data-showif = "appContext.pageLoaded")
+			ul.nav.nav-tabs(style = "cursor: pointer")
+				li(data-addclass-active = "is_curr", data-event-click = "appContext.romsContext.variableChanged", data-value = "curr")
+					a(src = "#") Current
+				li(data-addclass-active = "is_salinity", data-event-click = "appContext.romsContext.variableChanged", data-value = "salinity")
+					a(src = "#") Salinity and Current
+				li(data-addclass-active = "is_ssh", data-event-click = "appContext.romsContext.variableChanged", data-value = "ssh")
+					a(src = "#") Sea Surface Height and Current
+				li(data-addclass-active = "is_temp", data-event-click = "appContext.romsContext.variableChanged", data-value = "temp")
+					a(src = "#") Temperature and Current
+			br
+			.tab-content
+				#ca-roms.tab-pane.active
+					.row
+						.col-md-4.col-lg-3
+							.panel.panel-default
+								.panel-body
+									.btn-group.btn-block
+										button.btn.btn-primary.btn-block.dropdown-toggle(data-toggle = "dropdown")
+											span(data-bind = "regionLongName")
+											| 
+											i.fa.fa-caret-down
+										ul.dropdown-menu(role = "menu")
+											- each region in availableRegions
+												li(data-value = region.shortCode, data-event-click = "appContext.romsContext.regionChanged", data-addclass-active = "is_" + region.shortCode)
+													a(href = "#")= region.longName
+									hr(style = "margin: 10px")
+									.text-center
+										div(data-provide = "datepicker-inline", style = "display: inline-block")
+										.btn-group
+											button.btn.btn-default.btn-xs(data-addclass-active = "is03Selected", data-value = "3", data-event-click = "appContext.romsContext.timeChanged")
+												| 03 UTC
+											button.btn.btn-default.btn-xs(data-addclass-active = "is09Selected", data-value = "9", data-event-click = "appContext.romsContext.timeChanged")
+												| 09 UTC
+											button.btn.btn-default.btn-xs(data-addclass-active = "is15Selected", data-value = "15", data-event-click = "appContext.romsContext.timeChanged")
+												| 15 UTC
+											button.btn.btn-default.btn-xs(data-addclass-active = "is21Selected", data-value = "21", data-event-click = "appContext.romsContext.timeChanged")
+												| 21 UTC
+						.col-md-8.col-lg-9.text-center
+							img(data-bind-src = "imgPath", data-event-error = "appContext.romsContext.imageError", data-event-load = "appContext.romsContext.imageLoad", data-hideif = "imageError", style = "max-width: 100%")
+							.lead(data-showif = "imageError", style = "margin-bottom: 0; display: none") Data not found
+
+		.text-center(data-hideif = "appContext.pageLoaded")
+			br
+			br
+			br
+			i.fa.fa-spinner.fa-spin.fa-3x
