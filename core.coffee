@@ -2,8 +2,13 @@ fs = require "fs"
 
 padTo2Digits = (n) -> if n < 10 then "0" + n else n
 
+latestRoms = undefined
+
 exports.getLatestROMS = ->
-	ret = {}
+	latestRoms
+
+exports.updateLatestRoms = ->
+	latestRoms = {}
 	for region in ["ca", "cc", "ccc", "mb", "sfb", "nc1", "nc2"]
 		for variable in ["curr", "salinity", "ssh", "temp"]
 			now = new Date
@@ -16,9 +21,8 @@ exports.getLatestROMS = ->
 				now = new Date now - 6 * 60 * 60 * 1000
 			now = null if now.getUTCFullYear() is 2012
 			if now?
-				ret[region] ?= {}
-				ret[region][variable] = now
-	ret
+				latestRoms[region] ?= {}
+				latestRoms[region][variable] = now
 
 exports.getAvailableRegions = ->
 	regionMap =
@@ -34,3 +38,7 @@ exports.getAvailableRegions = ->
 	for shortCode, longName of regionMap
 		ret.push shortCode: shortCode, longName: longName if latestRoms[shortCode]?
 	ret
+
+do ->
+	exports.updateLatestRoms()
+	setInterval exports.updateLatestRoms, 60 * 60 * 1000
