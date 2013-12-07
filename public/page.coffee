@@ -48,6 +48,10 @@ require ["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
 			@accessor "is09Selected", -> @get("now").getUTCHours() is 9
 			@accessor "is15Selected", -> @get("now").getUTCHours() is 15
 			@accessor "is21Selected", -> @get("now").getUTCHours() is 21
+			@accessor "is03Enabled", -> if @get("endDate").getUTCHours() >= 3 or new Date(@get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(@get("now")).setUTCHours(0, 0, 0, 0) then "" else "disabled"
+			@accessor "is09Enabled", -> if @get("endDate").getUTCHours() >= 9 or new Date(@get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(@get("now")).setUTCHours(0, 0, 0, 0) then "" else "disabled"
+			@accessor "is15Enabled", -> if @get("endDate").getUTCHours() >= 15 or new Date(@get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(@get("now")).setUTCHours(0, 0, 0, 0) then "" else "disabled"
+			@accessor "is21Enabled", -> if @get("endDate").getUTCHours() >= 21 or new Date(@get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(@get("now")).setUTCHours(0, 0, 0, 0) then "" else "disabled"
 			@accessor "imgPath", -> "/data/ca-roms/#{@get("now").getUTCFullYear()}/#{@get "region"}_#{@get "variable"}#{padTo2Digits @get("now").getUTCMonth() + 1}#{padTo2Digits @get("now").getUTCDate()}_#{padTo2Digits @get("now").getUTCHours()}_0.jpg"
 			@accessor "regionLongName", -> $("ul>li[data-value=\"#{@get "region"}\"]>a").text()
 			for region of latestROMS then do (region) =>
@@ -61,7 +65,11 @@ require ["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
 				else
 					@set "variable", "curr"
 				@set "region", "ca"
-				@changeNow new Date latestROMS[@get "region"][@get "variable"]
+				now = new Date latestROMS[@get "region"][@get "variable"]
+				$("[data-provide=\"datepicker-inline\"]").datepicker "setStartDate", "04/24/2013"
+				$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
+				@set "endDate", now
+				@changeNow now
 				$("[data-provide=\"datepicker-inline\"]").on "changeDate", (e) =>
 					#e.date.setMilliseconds e.date.getMilliseconds() - e.date.getTimezoneOffset() * 60 * 1000
 					now = new Date @get "now"
@@ -69,6 +77,8 @@ require ["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
 					now.setUTCMonth e.date.getMonth()
 					now.setUTCFullYear e.date.getFullYear()
 					@set "now", now
+					now = new Date latestROMS[@get "region"][@get "variable"]
+					@changeNow now if @get("now") > now
 				history.replaceState variable: @get("variable"), null, "/roms?variable=#{@get "variable"}"
 				window.onpopstate = (e) =>
 					@set "variable", e.state?.variable ? "curr"
@@ -79,21 +89,27 @@ require ["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
 			changeNow: (date) ->
 				@set "now", date
 				$("[data-provide=\"datepicker-inline\"]").datepicker "update", "#{date.getUTCMonth() + 1}/#{date.getUTCDate()}/#{date.getUTCFullYear()}"
+				now = new Date latestROMS[@get "region"][@get "variable"]
+				@changeNow now if @get("now") > now
 			imageError: ->
 				@set "imageError", true
 			imageLoad: ->
 				@set "imageError", false
 			variableChanged: (node) ->
 				return if @get("variable") is $(node).attr "data-value"
+				now = new Date latestROMS[@get "region"][@get "variable"]
+				$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
+				@set "endDate", now
 				@set "variable", $(node).attr "data-value"
-				if @get("now") > now = new Date latestROMS[@get "region"][@get "variable"]
-					@changeNow now
+				@changeNow if @get("now") > now then now else @get("now")
 				history.pushState variable: @get("variable"), null, "/roms?variable=#{@get "variable"}"
 			regionChanged: (node) ->
 				return if @get("region") is $(node).attr "data-value"
 				@set "region", $(node).attr "data-value"
-				if @get("now") > now = new Date latestROMS[@get "region"][@get "variable"]
-					@changeNow now
+				now = new Date latestROMS[@get "region"][@get "variable"]
+				$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
+				@set "endDate", now
+				@changeNow if @get("now") > now then now else @get("now")
 
 	class Rompg extends Batman.App
 		@appContext: appContext = new AppContext

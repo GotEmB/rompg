@@ -112,6 +112,38 @@ require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
         return this.get("now").getUTCHours() === 21;
       });
 
+      RomsContext.accessor("is03Enabled", function() {
+        if (this.get("endDate").getUTCHours() >= 3 || new Date(this.get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(this.get("now")).setUTCHours(0, 0, 0, 0)) {
+          return "";
+        } else {
+          return "disabled";
+        }
+      });
+
+      RomsContext.accessor("is09Enabled", function() {
+        if (this.get("endDate").getUTCHours() >= 9 || new Date(this.get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(this.get("now")).setUTCHours(0, 0, 0, 0)) {
+          return "";
+        } else {
+          return "disabled";
+        }
+      });
+
+      RomsContext.accessor("is15Enabled", function() {
+        if (this.get("endDate").getUTCHours() >= 15 || new Date(this.get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(this.get("now")).setUTCHours(0, 0, 0, 0)) {
+          return "";
+        } else {
+          return "disabled";
+        }
+      });
+
+      RomsContext.accessor("is21Enabled", function() {
+        if (this.get("endDate").getUTCHours() >= 21 || new Date(this.get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(this.get("now")).setUTCHours(0, 0, 0, 0)) {
+          return "";
+        } else {
+          return "disabled";
+        }
+      });
+
       RomsContext.accessor("imgPath", function() {
         return "/data/ca-roms/" + (this.get("now").getUTCFullYear()) + "/" + (this.get("region")) + "_" + (this.get("variable")) + (padTo2Digits(this.get("now").getUTCMonth() + 1)) + (padTo2Digits(this.get("now").getUTCDate())) + "_" + (padTo2Digits(this.get("now").getUTCHours())) + "_0.jpg";
       });
@@ -141,7 +173,8 @@ require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
       }
 
       function RomsContext() {
-        var _this = this;
+        var now,
+          _this = this;
         RomsContext.__super__.constructor.apply(this, arguments);
         if (varMap[getParameterByName("variable")] != null) {
           this.set("variable", getParameterByName("variable"));
@@ -149,14 +182,21 @@ require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
           this.set("variable", "curr");
         }
         this.set("region", "ca");
-        this.changeNow(new Date(latestROMS[this.get("region")][this.get("variable")]));
+        now = new Date(latestROMS[this.get("region")][this.get("variable")]);
+        $("[data-provide=\"datepicker-inline\"]").datepicker("setStartDate", "04/24/2013");
+        $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
+        this.set("endDate", now);
+        this.changeNow(now);
         $("[data-provide=\"datepicker-inline\"]").on("changeDate", function(e) {
-          var now;
           now = new Date(_this.get("now"));
           now.setUTCDate(e.date.getDate());
           now.setUTCMonth(e.date.getMonth());
           now.setUTCFullYear(e.date.getFullYear());
-          return _this.set("now", now);
+          _this.set("now", now);
+          now = new Date(latestROMS[_this.get("region")][_this.get("variable")]);
+          if (_this.get("now") > now) {
+            return _this.changeNow(now);
+          }
         });
         history.replaceState({
           variable: this.get("variable")
@@ -175,8 +215,13 @@ require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
       };
 
       RomsContext.prototype.changeNow = function(date) {
+        var now;
         this.set("now", date);
-        return $("[data-provide=\"datepicker-inline\"]").datepicker("update", "" + (date.getUTCMonth() + 1) + "/" + (date.getUTCDate()) + "/" + (date.getUTCFullYear()));
+        $("[data-provide=\"datepicker-inline\"]").datepicker("update", "" + (date.getUTCMonth() + 1) + "/" + (date.getUTCDate()) + "/" + (date.getUTCFullYear()));
+        now = new Date(latestROMS[this.get("region")][this.get("variable")]);
+        if (this.get("now") > now) {
+          return this.changeNow(now);
+        }
       };
 
       RomsContext.prototype.imageError = function() {
@@ -192,10 +237,11 @@ require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
         if (this.get("variable") === $(node).attr("data-value")) {
           return;
         }
+        now = new Date(latestROMS[this.get("region")][this.get("variable")]);
+        $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
+        this.set("endDate", now);
         this.set("variable", $(node).attr("data-value"));
-        if (this.get("now") > (now = new Date(latestROMS[this.get("region")][this.get("variable")]))) {
-          this.changeNow(now);
-        }
+        this.changeNow(this.get("now") > now ? now : this.get("now"));
         return history.pushState({
           variable: this.get("variable")
         }, null, "/roms?variable=" + (this.get("variable")));
@@ -207,9 +253,10 @@ require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
           return;
         }
         this.set("region", $(node).attr("data-value"));
-        if (this.get("now") > (now = new Date(latestROMS[this.get("region")][this.get("variable")]))) {
-          return this.changeNow(now);
-        }
+        now = new Date(latestROMS[this.get("region")][this.get("variable")]);
+        $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
+        this.set("endDate", now);
+        return this.changeNow(this.get("now") > now ? now : this.get("now"));
       };
 
       return RomsContext;
