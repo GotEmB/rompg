@@ -75,7 +75,7 @@ require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           variable = _ref[_i];
           now = new Date(latestROMS.ca[variable]);
-          this.set("latestCaRomsImagePath_" + variable, "/data/ca-roms/" + (now.getUTCFullYear()) + "/" + (now.getUTCMonth() + 1) + "/ca_" + variable + (padTo2Digits(now.getUTCMonth() + 1)) + (padTo2Digits(now.getUTCDate())) + "_" + (padTo2Digits(now.getUTCHours())) + "_0.jpg");
+          this.set("latestCaRomsImagePath_" + variable, "/data/ca-roms/" + (now.getUTCFullYear()) + "/" + (padTo2Digits(now.getUTCMonth() + 1)) + "/ca_" + variable + (padTo2Digits(now.getUTCMonth() + 1)) + (padTo2Digits(now.getUTCDate())) + "_" + (padTo2Digits(now.getUTCHours())) + "_0.jpg");
         }
       }
 
@@ -113,7 +113,7 @@ require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
       });
 
       RomsContext.accessor("imgPath", function() {
-        return "/data/ca-roms/" + (this.get("now").getUTCFullYear()) + "/" + (this.get("now").getUTCMonth() + 1) + "/" + (this.get("region")) + "_" + (this.get("variable")) + (padTo2Digits(this.get("now").getUTCMonth() + 1)) + (padTo2Digits(this.get("now").getUTCDate())) + "_" + (padTo2Digits(this.get("now").getUTCHours())) + "_0.jpg";
+        return "/data/ca-roms/" + (this.get("now").getUTCFullYear()) + "/" + (padTo2Digits(this.get("now").getUTCMonth() + 1)) + "/" + (this.get("region")) + "_" + (this.get("variable")) + (padTo2Digits(this.get("now").getUTCMonth() + 1)) + (padTo2Digits(this.get("now").getUTCDate())) + "_" + (padTo2Digits(this.get("now").getUTCHours())) + "_0.jpg";
       });
 
       RomsContext.accessor("regionLongName", function() {
