@@ -100,7 +100,7 @@ require(["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
     })(Batman.Model);
 
     AppContext.prototype.RomsContext = (function(_super1) {
-      var hour, region, varMap, variable, _fn, _fn1, _i, _j, _len, _len1, _ref, _ref1,
+      var hour, region, varMap, variable, _fn, _fn1, _fn2, _i, _j, _len, _len1, _ref, _ref1,
         _this = this;
 
       __extends(RomsContext, _super1);
@@ -121,38 +121,41 @@ require(["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
       });
 
       _ref = [3, 9, 15, 21];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        hour = _ref[_i];
+      _fn = function(hour) {
         RomsContext.accessor("is" + (padTo2Digits(hour)) + "Selected", function() {
           return this.get("now").getUTCHours() === hour;
         });
-        RomsContext.accessor("is" + (padTo2Digits(hour)) + "Enabled", function() {
+        return RomsContext.accessor("is" + (padTo2Digits(hour)) + "Enabled", function() {
           if (this.get("endDate").getUTCHours() >= hour || new Date(this.get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(this.get("now")).setUTCHours(0, 0, 0, 0)) {
             return "";
           } else {
             return "disabled";
           }
         });
+      };
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        hour = _ref[_i];
+        _fn(hour);
       }
 
-      _fn = function(region) {
+      _fn1 = function(region) {
         return RomsContext.accessor("is_" + region, function() {
           return this.get("region") === region;
         });
       };
       for (region in latestROMS) {
-        _fn(region);
+        _fn1(region);
       }
 
       _ref1 = ["curr", "salinity", "ssh", "temp"];
-      _fn1 = function(variable) {
+      _fn2 = function(variable) {
         return RomsContext.accessor("is_" + variable, function() {
           return this.get("variable") === variable;
         });
       };
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         variable = _ref1[_j];
-        _fn1(variable);
+        _fn2(variable);
       }
 
       function RomsContext() {
