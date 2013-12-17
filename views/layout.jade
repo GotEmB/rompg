@@ -9,9 +9,9 @@ html
 		link(rel = "stylesheet", type = "text/css", href = "/components/bootstrap-datepicker/css/datepicker.css")
 		link(rel = "stylesheet", type = "text/css", href = "/components/bootstrap-datepicker/css/datepicker3.css")
 		link(rel = "stylesheet", type = "text/css", href = "/components/font-awesome/css/font-awesome.min.css")
+		link(rel = "stylesheet", type = "text/css", href = "//cdn.leafletjs.com/leaflet-0.7.1/leaflet.css")
 		link(rel = "stylesheet", type = "text/css", href = "/page.css")
 		script(type = "text/javascript", src = "/components/requirejs/require.js", data-main = "/page")
-		script (function(i){'use strict';function d(c,b,e){return c[b]||(c[b]=e())}return d(d(i,"angular",Object),"module",function(){var c={};return function(b,e,f){e&&c.hasOwnProperty(b)&&(c[b]=null);return d(c,b,function(){function a(a,b,d){return function(){c[d||"push"]([a,b,arguments]);return g}}if(!e)throw Error("No module: "+b);var c=[],d=[],h=a("$injector","invoke"),g={_invokeQueue:c,_runBlocks:d,requires:e,name:b,provider:a("$provide","provider"),factory:a("$provide","factory"),service:a("$provide","service"), value:a("$provide","value"),constant:a("$provide","constant","unshift"),filter:a("$filterProvider","register"),controller:a("$controllerProvider","register"),directive:a("$compileProvider","directive"),config:h,run:function(a){d.push(a);return this}};f&&h(f);return g})}})})(window);
 		title #{pageTitle}
 	body(data-context = "appContext", style = "margin-right: 0; padding-top: 70px")
 		nav.navbar.navbar-inverse.navbar-fixed-top(role = "navigation")
@@ -33,4 +33,6 @@ html
 							a(href = (thisPage == "blog" ? "#" : "//rompg-blog.herokuapp.com")) Blog
 						li(class = (thisPage == "roms" ? "active" : ""))
 							a(href = (thisPage == "roms" ? "#" : "/roms")) ROMS
+						li(class = (thisPage == "interactive" ? "active" : ""))
+							a(href = (thisPage == "interactive" ? "#" : "/interactive")) Interactive
 		block content

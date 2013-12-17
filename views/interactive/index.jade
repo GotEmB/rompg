@@ -1,0 +1,13 @@
+extends ../layout
+
+block vars
+	- var pageTitle = "ROMS · Regional Ocean Modeling and Prediction Group"
+	- var thisPage = "interactive"
+
+block content
+	.container(data-context = "interactiveContext")
+		.jumbotron
+			h1 Interactive Content
+			p This page contains interative maps that you can play around with.
+		div
+			#imap(style = "height: 500px")

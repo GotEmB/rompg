@@ -5,17 +5,21 @@ require.config
 		bootstrapDatepicker: "/components/bootstrap-datepicker/js/bootstrap-datepicker"
 		batman: "/batmanjs/batman"
 		latestROMS: "/latestROMS.json?callback=define"
+		leaflet: "//cdn.leafletjs.com/leaflet-0.7.1/leaflet"
+		esriLeaflet: "/esri-leaflet/esri-leaflet"
 	shim:
 		bootstrap: deps: ["jquery"]
 		bootstrapDatepicker: deps: ["bootstrap"]
 		batman: deps: ["jquery"], exports: "Batman"
+		leaflet: exports: "L"
+		esriLeaflet: deps: ["leaflet"]
 	waitSeconds: 30
 
 appContext = undefined
 
 define "Batman", ["batman"], (Batman) -> Batman.DOM.readers.batmantarget = Batman.DOM.readers.target and delete Batman.DOM.readers.target and Batman
 
-require ["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], ($, Batman, latestROMS) ->
+require ["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDatepicker", "esriLeaflet"], ($, Batman, latestROMS, L) ->
 
 	padTo2Digits = (n) -> if n < 10 then "0" + n else n
 
@@ -30,6 +34,7 @@ require ["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
 			super
 			@set "homeContext", new @HomeContext if window.location.pathname is "/"
 			@set "romsContext", new @RomsContext if window.location.pathname is "/roms"
+			@set "interactiveContext", new @InteractiveContext if window.location.pathname is "/interactive"
 
 		class @::HomeContext extends Batman.Model
 			constructor: ->
@@ -110,6 +115,16 @@ require ["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
 				$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
 				@set "endDate", now
 				@changeNow if @get("now") > now then now else @get("now")
+
+		class @::InteractiveContext extends Batman.Model
+			constructor: ->
+				imap = L.map("imap").setView [37.5, -123], 7
+				#L.tileLayer("http://{s}.tile.cloudmade.com/6cd40a69b88a4d878bee0e819a2ba6ca/997/256/{z}/{x}/{y}.png",
+				#	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+				#	maxZoom: 18
+				#	detectRetina: true
+				#).addTo imap
+				(new L.esri.BasemapLayer("Oceans")).addTo imap
 
 	class Rompg extends Batman.App
 		@appContext: appContext = new AppContext
