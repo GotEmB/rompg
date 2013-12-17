@@ -10,7 +10,16 @@ block content
 			h1 ROMS
 			p The California Coastal Ocean (CA) nowcasting and forecasting system is based on the Regional Ocean Modeling System (ROMS). The domain encompasses the entire California coastal region out to about 1000 km offshore, with a horizontal resolution of approximately 3 km and 40 vertical levels. A multi-scale three-dimensional variational data assimilation (MS-3DVAR) methodology is used to produce the nowcast output shown here. A nowcast (or analysis) is produced every 6 hours at 03, 09, 15 and 21 UTC.
 		div(style = "display: none", data-showif = "appContext.pageLoaded")
-			ul.nav.nav-tabs(style = "cursor: pointer")
+			ul.nav.nav-tabs.visible-md.visible-lg(style = "cursor: pointer")
+				li(data-addclass-active = "is_curr", data-event-click = "appContext.romsContext.variableChanged", data-value = "curr")
+					a(src = "#") Current
+				li(data-addclass-active = "is_salinity", data-event-click = "appContext.romsContext.variableChanged", data-value = "salinity")
+					a(src = "#") Salinity and Current
+				li(data-addclass-active = "is_ssh", data-event-click = "appContext.romsContext.variableChanged", data-value = "ssh")
+					a(src = "#") Sea Surface Height and Current
+				li(data-addclass-active = "is_temp", data-event-click = "appContext.romsContext.variableChanged", data-value = "temp")
+					a(src = "#") Temperature and Current
+			ul.nav.nav-pills.nav-stacked.visible-xs.visible-sm(style = "cursor: pointer")
 				li(data-addclass-active = "is_curr", data-event-click = "appContext.romsContext.variableChanged", data-value = "curr")
 					a(src = "#") Current
 				li(data-addclass-active = "is_salinity", data-event-click = "appContext.romsContext.variableChanged", data-value = "salinity")
@@ -38,6 +47,7 @@ block content
 									hr(style = "margin: 10px")
 									.text-center
 										div(data-provide = "datepicker-inline", style = "display: inline-block")
+									.text-center
 										.btn-group
 											button.btn.btn-default.btn-xs(data-addclass-active = "is03Selected", data-bind-disabled="is03Enabled", data-value = "3", data-event-click = "appContext.romsContext.timeChanged")
 												| 03 UTC
