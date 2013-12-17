@@ -33,6 +33,7 @@ exports.getAvailableRegions = ->
 		sfb: "San Francisco Bay"
 		nc1: "North Coast I"
 		nc2: "North Coast II"
+		scb: "Southern California"
 	latestRoms = exports.getLatestROMS()
 	ret = []
 	for shortCode, longName of regionMap
