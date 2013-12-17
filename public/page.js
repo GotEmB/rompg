@@ -9,7 +9,9 @@ require.config({
     bootstrap: "/components/bootstrap/dist/js/bootstrap.min",
     bootstrapDatepicker: "/components/bootstrap-datepicker/js/bootstrap-datepicker",
     batman: "/batmanjs/batman",
-    latestROMS: "/latestROMS.json?callback=define"
+    latestROMS: "/latestROMS.json?callback=define",
+    leaflet: "//cdn.leafletjs.com/leaflet-0.7.1/leaflet",
+    esriLeaflet: "/esri-leaflet/esri-leaflet"
   },
   shim: {
     bootstrap: {
@@ -21,6 +23,12 @@ require.config({
     batman: {
       deps: ["jquery"],
       exports: "Batman"
+    },
+    leaflet: {
+      exports: "L"
+    },
+    esriLeaflet: {
+      deps: ["leaflet"]
     }
   },
   waitSeconds: 30
@@ -32,7 +40,7 @@ define("Batman", ["batman"], function(Batman) {
   return Batman.DOM.readers.batmantarget = Batman.DOM.readers.target && delete Batman.DOM.readers.target && Batman;
 });
 
-require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], function($, Batman, latestROMS) {
+require(["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDatepicker", "esriLeaflet"], function($, Batman, latestROMS, L) {
   var AppContext, Rompg, getParameterByName, padTo2Digits, _ref;
   padTo2Digits = function(n) {
     if (n < 10) {
@@ -62,6 +70,9 @@ require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
       }
       if (window.location.pathname === "/roms") {
         this.set("romsContext", new this.RomsContext);
+      }
+      if (window.location.pathname === "/interactive") {
+        this.set("interactiveContext", new this.InteractiveContext);
       }
     }
 
@@ -262,6 +273,19 @@ require(["jquery", "Batman", "latestROMS", "bootstrap", "bootstrapDatepicker"], 
       return RomsContext;
 
     }).call(this, Batman.Model);
+
+    AppContext.prototype.InteractiveContext = (function(_super1) {
+      __extends(InteractiveContext, _super1);
+
+      function InteractiveContext() {
+        var imap;
+        imap = L.map("imap").setView([37.5, -123], 7);
+        (new L.esri.BasemapLayer("Oceans")).addTo(imap);
+      }
+
+      return InteractiveContext;
+
+    })(Batman.Model);
 
     return AppContext;
 
