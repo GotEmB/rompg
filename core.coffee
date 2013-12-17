@@ -9,7 +9,7 @@ exports.getLatestROMS = ->
 
 exports.updateLatestRoms = ->
 	latestRoms = {}
-	for region in ["ca", "cc", "ccc", "mb", "sfb", "nc1", "nc2"]
+	for region in ["ca", "cc", "ccc", "mb", "sfb", "nc1", "nc2", "scb"]
 		for variable in ["curr", "salinity", "ssh", "temp"]
 			now = new Date
 			now.setDate now.getDate() - 1 if Math.floor((now.getUTCHours() - 3) / 6) < 0
