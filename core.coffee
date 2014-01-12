@@ -26,7 +26,7 @@ exports.updateLatestRoms = ->
 			now.setUTCMinutes 0
 			now.setUTCSeconds 0
 			now.setUTCMilliseconds 0
-			until now.getUTCFullYear() is 2012 or fs.existsSync "#{process.env.CAROMS_DIR}/#{now.getUTCFullYear()}/#{now.getUTCMonth() + 1}/#{region}_#{variable}#{padTo2Digits now.getUTCMonth() + 1}#{padTo2Digits now.getUTCDate()}_#{padTo2Digits now.getUTCHours()}_0.jpg"
+			until now.getUTCFullYear() is 2012 or fs.existsSync "#{process.env.CAROMS_DIR}/#{now.getUTCFullYear()}/#{padTo2Digits now.getUTCMonth() + 1}/#{region}_#{variable}#{padTo2Digits now.getUTCMonth() + 1}#{padTo2Digits now.getUTCDate()}_#{padTo2Digits now.getUTCHours()}_0.jpg"
 				now = new Date now - 6 * 60 * 60 * 1000
 			now = null if now.getUTCFullYear() is 2012
 			if now?
