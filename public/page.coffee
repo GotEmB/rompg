@@ -13,12 +13,15 @@ require.config
 		latestROMS: "/latestROMS.json?callback=define"
 		leaflet: "//cdn.leafletjs.com/leaflet-0.7.1/leaflet"
 		esriLeaflet: "/esri-leaflet/esri-leaflet"
+		heatmap: "/heatmap.js/src/heatmap"
+		heatmapLeaflet: "/heatmap.js/src/heatmap-leaflet"
 	shim:
 		bootstrap: deps: ["jquery"]
 		bootstrapDatepicker: deps: ["bootstrap"]
 		batman: deps: ["jquery"], exports: "Batman"
 		leaflet: exports: "L"
 		esriLeaflet: deps: ["leaflet"]
+		heatmapLeaflet: deps: ["leaflet", "heatmap"]
 	waitSeconds: 30
 
 # Expose `appContext` globally (for debugging only)
@@ -28,7 +31,7 @@ appContext = undefined
 define "Batman", ["batman"], (Batman) -> Batman.DOM.readers.batmantarget = Batman.DOM.readers.target and delete Batman.DOM.readers.target and Batman
 
 # Main Function that'll run once all modules are loaded
-require ["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDatepicker", "esriLeaflet"], ($, Batman, latestROMS, L) ->
+require ["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDatepicker", "esriLeaflet", "heatmap", "heatmap-leaflet"], ($, Batman, latestROMS, L) ->
 
 	# Pad Digits. Ex. 1 -> 01; 10 -> 10
 	padTo2Digits = (n) -> if n < 10 then "0" + n else n
