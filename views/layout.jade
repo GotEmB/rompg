@@ -1,7 +1,7 @@
 doctype 5
 block vars
 
-html
+html(style = "height: 100%")
 	head
 		meta(charset='utf-8')
 		meta(name ="viewport", content = "width=device-width, initial-scale=1, maximum-scale=1")
@@ -13,26 +13,26 @@ html
 		link(rel = "stylesheet", type = "text/css", href = "/page.css")
 		script(type = "text/javascript", src = "/components/requirejs/require.js", data-main = "/page")
 		title #{pageTitle}
-	body(data-context = "appContext", style = "margin-right: 0; padding-top: 70px")
+	body(data-context = "appContext", style = "margin-right: 0; padding-top: 70px; min-height: 100%; position: relative; padding-bottom: 60px")
 		nav.navbar.navbar-inverse.navbar-fixed-top(role = "navigation")
 			.container
 				.navbar-header
 					button.navbar-toggle(type = "button", data-toggle = "collapse", data-target = ".navbar-nv-collapse")
 						- for(var i = 0; i < 3; i++)
 							span.icon-bar
-					a.navbar-brand(href = (thisPage == "home" ? "#" : "/"), style = "color: #fff") ROMPG
+					a.navbar-brand(href = (thisPage == "home" ? "#" : "/"), style = "color: #fff")
+						.hidden-xs Cooperative Ocean Prediction System (COPS)
+						.visible-xs	COPS
 				.collapse.navbar-collapse.navbar-nv-collapse
-					ul.nav.navbar-nav
+					ul.nav.navbar-nav.navbar-right
 						li(class = (thisPage == "home" ? "active" : ""))
 							a(href = (thisPage == "home" ? "#" : "/")) Home
-						li(class = (thisPage == "about" ? "active" : ""))
-							a(href = (thisPage == "about" ? "#" : "/about")) About
 						li(class = (thisPage == "people" ? "active" : ""))
 							a(href = (thisPage == "people" ? "#" : "/people")) People
-						li(class = (thisPage == "blog" ? "active" : ""))
-							a(href = (thisPage == "blog" ? "#" : "//rompg-blog.herokuapp.com")) Blog
-						li(class = (thisPage == "roms" ? "active" : ""))
-							a(href = (thisPage == "roms" ? "#" : "/roms")) ROMS
-						li(class = (thisPage == "interactive" ? "active" : ""))
-							a(href = (thisPage == "interactive" ? "#" : "/interactive")) Interactive
+						li(class = (thisPage == "ca_roms" ? "active" : ""))
+							a(href = (thisPage == "ca_roms" ? "#" : "/ca_roms")) CA ROMS
 		block content
+		footer.site-footer(style = "background-color: #eee; position: absolute; bottom: 0; width: 100%")
+			.container
+				p.text-muted.pull-right(style = "margin: 20px 0")
+					| All content copyright <a href="/">COPS</a> © 2014 • All rights reserved.
