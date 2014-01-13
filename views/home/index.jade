@@ -5,12 +5,20 @@ block vars
 	- var thisPage = "home"
 
 block content
+	.jumbotron(style = "margin-top: -20px")
+		.container
+			h1(style = "font-weight: 200") Welcome
+			p The <em>Cooperative Ocean Prediction System (COPS)</em> is a collaboration between <a href="//www.remotesensingsolutions.com"><em>Remote Sensing Solutions, Inc.</em></a> and <a href="//jifresse.ucla.edu"><em>UCLA Joint Institute for Regional Earth System Science and Engineering (JIFRESSE)</em></a> to improve understanding and to develop projections about regional ocean and environments. In addition to its core team, we welcome outside investigators to participate and contribute.
+			.row
+				.col-sm-3.col-sm-offset-3.col-md-3.col-md-offset-3.col-lg-3.col-lg-offset-3
+					a(href = "//www.remotesensingsolutions.com")
+						img(src = "/images/rsslogo_clipped.png", style = "display: block; margin: 0 auto 0; max-height: 80px")
+				.col-sm-3.col-md-3.col-lg-3
+					a(href = "//jifresse.ucla.edu")
+						img(src = "/images/JIFRESSELogo2.png", style = "display: block; margin: 0 auto 0; max-height: 80px")
 	.container(data-context = "homeContext")
-		.jumbotron
-			h1 Welcome
-			p This is the <strong>Regional Ocean Modeling and Prediction Group</strong> at UCLA JIFRESSE. To get to know more about ROMPG, check out the <a href="/about">About</a> section.
 		.row(style = "display: none", data-showif = "appContext.pageLoaded")
-			.col-md-6
+			.col-sm-6
 				.panel.panel-default(style = "overflow: hidden")
 					.panel-body.text-center
 						a(href = "/roms?variable=curr")
@@ -19,7 +27,7 @@ block content
 					.panel-body.text-center
 						a(href = "/roms?variable=salinity")
 							img(data-bind-src = "latestCaRomsImagePath_salinity", style = "max-width: 100%")
-			.col-md-6
+			.col-sm-6
 				.panel.panel-default(style = "overflow: hidden")
 					.panel-body.text-center
 						a(href = "/roms?variable=ssh")

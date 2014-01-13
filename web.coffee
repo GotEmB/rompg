@@ -23,8 +23,8 @@ web.get "/", (req, res) ->
 	res.render "home"
 
 # HTTP GET '/roms'
-web.get "/roms", (req, res) ->
-	res.render "roms", availableRegions: core.getAvailableRegions()
+web.get "/ca_roms", (req, res) ->
+	res.render "ca_roms", availableRegions: core.getAvailableRegions()
 
 # HTTP GET '/latestROMS.json'
 web.get "/latestROMS.json", (req, res) ->
