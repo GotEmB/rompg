@@ -47,7 +47,7 @@ require ["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
 
 			# Required Page Model gets instantiated
 			@set "homeContext", new @HomeContext if window.location.pathname is "/"
-			@set "romsContext", new @RomsContext if window.location.pathname is "/roms"
+			@set "romsContext", new @RomsContext if window.location.pathname is "/ca_roms"
 			@set "interactiveContext", new @InteractiveContext if window.location.pathname is "/interactive"
 
 		# Page Model for HTTP GET '/'
