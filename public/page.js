@@ -73,7 +73,7 @@ require(["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
       if (window.location.pathname === "/") {
         this.set("homeContext", new this.HomeContext);
       }
-      if (window.location.pathname === "/roms") {
+      if (window.location.pathname === "/ca_roms") {
         this.set("romsContext", new this.RomsContext);
       }
       if (window.location.pathname === "/interactive") {
