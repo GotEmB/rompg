@@ -5,10 +5,24 @@ block vars
 	- var thisPage = "ca_roms"
 
 block content
+	.visible-md.visible-lg(style = "position: absolute; width: 100%")
+		.container
+			.row
+				.col-md-7.col-md-offset-5.col-lg-6.col-lg-offset-6
+					.panel.panel-default
+						.panel-body
+							p(style = "margin-bottom: 0; font-size: 0.9em")
+								| The California Coastal Ocean (CA) nowcasting and forecasting system is based on the Regional Ocean Modeling System (ROMS). The domain encompasses the entire California coastal region out to about 1000 km offshore, with a horizontal resolution of approximately 3 km and 40 vertical levels. A multi-scale three-dimensional variational data assimilation (MS-3DVAR) methodology is used to produce the nowcast output shown here. A nowcast (or analysis) is produced every 6 hours at 03, 09, 15 and 21 UTC. &nbsp;
+								a(href = "#") Read More &#8594;
+	.jumbotron(style = "margin-top: -20px")
+		.container
+			h1(style = "font-weight: 200") CA ROMS
 	.container(data-context = "romsContext")
-		.jumbotron
-			h1 ROMS
-			p The California Coastal Ocean (CA) nowcasting and forecasting system is based on the Regional Ocean Modeling System (ROMS). The domain encompasses the entire California coastal region out to about 1000 km offshore, with a horizontal resolution of approximately 3 km and 40 vertical levels. A multi-scale three-dimensional variational data assimilation (MS-3DVAR) methodology is used to produce the nowcast output shown here. A nowcast (or analysis) is produced every 6 hours at 03, 09, 15 and 21 UTC.
+		.panel.panel-default.hidden-md.hidden-lg
+			.panel-body
+				p(style = "margin-bottom: 0")
+					| The California Coastal Ocean (CA) nowcasting and forecasting system is based on the Regional Ocean Modeling System (ROMS). The domain encompasses the entire California coastal region out to about 1000 km offshore, with a horizontal resolution of approximately 3 km and 40 vertical levels. A multi-scale three-dimensional variational data assimilation (MS-3DVAR) methodology is used to produce the nowcast output shown here. A nowcast (or analysis) is produced every 6 hours at 03, 09, 15 and 21 UTC. &nbsp;
+					a(href = "#") Read More &#8594;
 		div(style = "display: none", data-showif = "appContext.pageLoaded")
 			ul.nav.nav-tabs.visible-md.visible-lg(style = "cursor: pointer")
 				li(data-addclass-active = "is_curr", data-event-click = "appContext.romsContext.variableChanged", data-value = "curr")
@@ -35,6 +49,7 @@ block content
 						.col-md-4.col-lg-3
 							.panel.panel-default
 								.panel-body
+									p.text-center(style = "margin-bottom: 5px") Select Region
 									.btn-group.btn-block
 										button.btn.btn-primary.btn-block.dropdown-toggle(data-toggle = "dropdown")
 											span(data-bind = "regionLongName")
@@ -66,3 +81,5 @@ block content
 			br
 			br
 			i.fa.fa-spinner.fa-spin.fa-3x
+		br
+		br
