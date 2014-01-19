@@ -186,7 +186,7 @@ require(["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
         });
         history.replaceState({
           variable: this.get("variable")
-        }, null, "/roms?variable=" + (this.get("variable")));
+        }, null, "/ca_roms?variable=" + (this.get("variable")));
         window.onpopstate = function(e) {
           var _ref2, _ref3;
           return _this.set("variable", (_ref2 = (_ref3 = e.state) != null ? _ref3.variable : void 0) != null ? _ref2 : "curr");
@@ -230,7 +230,7 @@ require(["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
         this.changeNow(this.get("now") > now ? now : this.get("now"));
         return history.pushState({
           variable: this.get("variable")
-        }, null, "/roms?variable=" + (this.get("variable")));
+        }, null, "/ca_roms?variable=" + (this.get("variable")));
       };
 
       RomsContext.prototype.regionChanged = function(node) {

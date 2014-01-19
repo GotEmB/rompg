@@ -60,7 +60,7 @@ require ["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
 					now = new Date latestROMS.ca[variable]
 					@set "latestCaRomsImagePath_#{variable}", "/data/ca-roms/#{now.getUTCFullYear()}/ca_#{variable}#{padTo2Digits now.getUTCMonth() + 1}#{padTo2Digits now.getUTCDate()}_#{padTo2Digits now.getUTCHours()}_0.jpg"
 
-		# Page Model for HTTP GET '/roms'
+		# Page Model for HTTP GET '/ca_roms'
 		class @::RomsContext extends Batman.Model
 			varMap =
 				curr: "Current"
@@ -105,7 +105,7 @@ require ["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
 					@changeNow now if @get("now") > now
 
 				# Set queryParam to current variable for consistency
-				history.replaceState variable: @get("variable"), null, "/roms?variable=#{@get "variable"}"
+				history.replaceState variable: @get("variable"), null, "/ca_roms?variable=#{@get "variable"}"
 				window.onpopstate = (e) =>
 					@set "variable", e.state?.variable ? "curr"
 
@@ -138,7 +138,7 @@ require ["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
 				@set "endDate", now
 				@set "variable", $(node).attr "data-value"
 				@changeNow if @get("now") > now then now else @get("now")
-				history.pushState variable: @get("variable"), null, "/roms?variable=#{@get "variable"}"
+				history.pushState variable: @get("variable"), null, "/ca_roms?variable=#{@get "variable"}"
 
 			# When a region is changed using the dropdown
 			regionChanged: (node) ->
