@@ -42,7 +42,7 @@ block content
 				+ca_vars_list()
 			br
 			.tab-content
-				#ca-roms.tab-pane.active
+				#ca-roms.tab-pane(data-removeclass-active = "is_drifter")
 					.row
 						.col-md-4.col-lg-3
 							.panel.panel-default
@@ -73,6 +73,8 @@ block content
 						.col-md-8.col-lg-9.text-center
 							img(data-bind-src = "imgPath", data-event-error = "appContext.romsContext.imageError", data-event-load = "appContext.romsContext.imageLoad", data-hideif = "imageError", style = "max-width: 100%")
 							.lead(data-showif = "imageError", style = "margin-bottom: 0; display: none") Data not found
+				.tab-pane(data-addclass-active = "is_drifter")
+					iframe(src = "//west.rssoffice.com/CA/drifter.jsp", style = "width: 100%; height: 800px", frameBorder = "0")
 
 		.text-center(data-hideif = "appContext.pageLoaded")
 			br
