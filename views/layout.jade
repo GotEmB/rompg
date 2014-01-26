@@ -5,7 +5,8 @@ html(style = "height: 100%")
 	head
 		meta(charset='utf-8')
 		meta(name ="viewport", content = "width=device-width, initial-scale=1, maximum-scale=1")
-		link(rel = "stylesheet", type = "text/css", href = "/components/bootstrap/dist/css/bootstrap.min.css")
+		//link(rel = "stylesheet", type = "text/css", href = "/components/bootstrap/dist/css/bootstrap.min.css")
+		link(rel = "stylesheet", type = "text/css", href = "/flatly_bootstrap.min.css")
 		link(rel = "stylesheet", type = "text/css", href = "/components/bootstrap-datepicker/css/datepicker.css")
 		link(rel = "stylesheet", type = "text/css", href = "/components/bootstrap-datepicker/css/datepicker3.css")
 		link(rel = "stylesheet", type = "text/css", href = "/components/font-awesome/css/font-awesome.min.css")
@@ -14,7 +15,7 @@ html(style = "height: 100%")
 		script(type = "text/javascript", src = "/components/requirejs/require.js", data-main = "/page")
 		title #{pageTitle}
 	body(data-context = "appContext", style = "margin-right: 0; padding-top: 70px; min-height: 100%; position: relative; padding-bottom: 60px")
-		nav.navbar.navbar-inverse.navbar-fixed-top(role = "navigation")
+		nav.navbar.navbar-default.navbar-fixed-top(role = "navigation")
 			.container
 				.navbar-header
 					button.navbar-toggle(type = "button", data-toggle = "collapse", data-target = ".navbar-nv-collapse")
@@ -32,7 +33,7 @@ html(style = "height: 100%")
 						li(class = (thisPage == "ca_roms" ? "active" : ""))
 							a(href = (thisPage == "ca_roms" ? "#" : "/ca_roms")) CA ROMS
 		block content
-		footer.site-footer(style = "background-color: #eee; position: absolute; bottom: 0; width: 100%")
+		footer.site-footer(style = "background-color: #ECF0F1; position: absolute; bottom: 0; width: 100%")
 			.container
 				p.text-muted.pull-right(style = "margin: 20px 0")
 					| All content copyright <a href="/">COPS</a> © 2014 • All rights reserved.

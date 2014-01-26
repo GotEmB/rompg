@@ -5,15 +5,17 @@ block vars
 	- var thisPage = "ca_roms"
 
 block content
-	.visible-md.visible-lg(style = "position: absolute; width: 100%")
+	mixin desc_content
+		| The California Coastal Ocean (CA) nowcasting and forecasting system is based on the Regional Ocean Modeling System (ROMS). The domain encompasses the entire California coastal region out to about 1000 km offshore, with a horizontal resolution of approximately 3 km and 40 vertical levels. A multi-scale three-dimensional variational data assimilation (MS-3DVAR) methodology is used to produce the nowcast output shown here. A nowcast (or analysis) is produced every 6 hours at 03, 09, 15 and 21 UTC. &nbsp;
+		a(href = "#") Read More &#8594;
+	.visible-md.visible-lg(style = "position: absolute; width: 100%; margin-top: -4px")
 		.container
 			.row
 				.col-md-7.col-md-offset-5.col-lg-6.col-lg-offset-6
 					.panel.panel-default
 						.panel-body
 							p(style = "margin-bottom: 0; font-size: 0.9em")
-								| The California Coastal Ocean (CA) nowcasting and forecasting system is based on the Regional Ocean Modeling System (ROMS). The domain encompasses the entire California coastal region out to about 1000 km offshore, with a horizontal resolution of approximately 3 km and 40 vertical levels. A multi-scale three-dimensional variational data assimilation (MS-3DVAR) methodology is used to produce the nowcast output shown here. A nowcast (or analysis) is produced every 6 hours at 03, 09, 15 and 21 UTC. &nbsp;
-								a(href = "#") Read More &#8594;
+								+desc_content()
 	.jumbotron(style = "margin-top: -20px")
 		.container
 			h1(style = "font-weight: 200") CA ROMS
@@ -21,30 +23,26 @@ block content
 		.panel.panel-default.hidden-md.hidden-lg
 			.panel-body
 				p(style = "margin-bottom: 0")
-					| The California Coastal Ocean (CA) nowcasting and forecasting system is based on the Regional Ocean Modeling System (ROMS). The domain encompasses the entire California coastal region out to about 1000 km offshore, with a horizontal resolution of approximately 3 km and 40 vertical levels. A multi-scale three-dimensional variational data assimilation (MS-3DVAR) methodology is used to produce the nowcast output shown here. A nowcast (or analysis) is produced every 6 hours at 03, 09, 15 and 21 UTC. &nbsp;
-					a(href = "#") Read More &#8594;
+					+desc_content()
 		div(style = "display: none", data-showif = "appContext.pageLoaded")
+			mixin ca_vars_list
+				li(data-addclass-active = "is_curr", data-event-click = "appContext.romsContext.variableChanged", data-value = "curr")
+					a(src = "#") Current
+				li(data-addclass-active = "is_salinity", data-event-click = "appContext.romsContext.variableChanged", data-value = "salinity")
+					a(src = "#") Salinity and Current
+				li(data-addclass-active = "is_ssh", data-event-click = "appContext.romsContext.variableChanged", data-value = "ssh")
+					a(src = "#") Sea Surface Height and Current
+				li(data-addclass-active = "is_temp", data-event-click = "appContext.romsContext.variableChanged", data-value = "temp")
+					a(src = "#") Temperature and Current
+				li.pull-right(data-addclass-active = "is_drifter", data-event-click = "appContext.romsContext.variableChanged", data-value = "drifter")
+					a(src = "#") Drifter
 			ul.nav.nav-tabs.visible-md.visible-lg(style = "cursor: pointer")
-				li(data-addclass-active = "is_curr", data-event-click = "appContext.romsContext.variableChanged", data-value = "curr")
-					a(src = "#") Current
-				li(data-addclass-active = "is_salinity", data-event-click = "appContext.romsContext.variableChanged", data-value = "salinity")
-					a(src = "#") Salinity and Current
-				li(data-addclass-active = "is_ssh", data-event-click = "appContext.romsContext.variableChanged", data-value = "ssh")
-					a(src = "#") Sea Surface Height and Current
-				li(data-addclass-active = "is_temp", data-event-click = "appContext.romsContext.variableChanged", data-value = "temp")
-					a(src = "#") Temperature and Current
+				+ca_vars_list()
 			ul.nav.nav-pills.nav-stacked.visible-xs.visible-sm(style = "cursor: pointer")
-				li(data-addclass-active = "is_curr", data-event-click = "appContext.romsContext.variableChanged", data-value = "curr")
-					a(src = "#") Current
-				li(data-addclass-active = "is_salinity", data-event-click = "appContext.romsContext.variableChanged", data-value = "salinity")
-					a(src = "#") Salinity and Current
-				li(data-addclass-active = "is_ssh", data-event-click = "appContext.romsContext.variableChanged", data-value = "ssh")
-					a(src = "#") Sea Surface Height and Current
-				li(data-addclass-active = "is_temp", data-event-click = "appContext.romsContext.variableChanged", data-value = "temp")
-					a(src = "#") Temperature and Current
+				+ca_vars_list()
 			br
 			.tab-content
-				#ca-roms.tab-pane.active
+				#ca-roms.tab-pane(data-removeclass-active = "is_drifter")
 					.row
 						.col-md-4.col-lg-3
 							.panel.panel-default
@@ -75,6 +73,8 @@ block content
 						.col-md-8.col-lg-9.text-center
 							img(data-bind-src = "imgPath", data-event-error = "appContext.romsContext.imageError", data-event-load = "appContext.romsContext.imageLoad", data-hideif = "imageError", style = "max-width: 100%")
 							.lead(data-showif = "imageError", style = "margin-bottom: 0; display: none") Data not found
+				.tab-pane(data-addclass-active = "is_drifter")
+					iframe(src = "//west.rssoffice.com/CA/drifter.jsp", style = "width: 100%; height: 800px", frameBorder = "0")
 
 		.text-center(data-hideif = "appContext.pageLoaded")
 			br

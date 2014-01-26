@@ -150,7 +150,7 @@ require(["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
       _ref1 = ["curr", "salinity", "ssh", "temp"];
       _fn2 = function(variable) {
         return RomsContext.accessor("is_" + variable, function() {
-          return this.get("variable") === variable;
+          return !this.get("is_drifter") && this.get("variable") === variable;
         });
       };
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
@@ -168,6 +168,7 @@ require(["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
           this.set("variable", "curr");
         }
         this.set("region", "ca");
+        this.set("is_drifter", getParameterByName("drifter") === "active");
         now = new Date(latestROMS[this.get("region")][this.get("variable")]);
         $("[data-provide=\"datepicker-inline\"]").datepicker("setStartDate", "04/24/2013");
         $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
@@ -184,12 +185,23 @@ require(["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
             return _this.changeNow(now);
           }
         });
-        history.replaceState({
-          variable: this.get("variable")
-        }, null, "/ca_roms?variable=" + (this.get("variable")));
+        if (this.get("is_drifter")) {
+          history.replaceState({
+            drifter: "active"
+          }, null, "/ca_roms?drifter=active");
+        } else {
+          history.replaceState({
+            variable: this.get("variable")
+          }, null, "/ca_roms?variable=" + (this.get("variable")));
+        }
         window.onpopstate = function(e) {
-          var _ref2, _ref3;
-          return _this.set("variable", (_ref2 = (_ref3 = e.state) != null ? _ref3.variable : void 0) != null ? _ref2 : "curr");
+          var _ref2, _ref3, _ref4;
+          if (((_ref2 = e.state) != null ? _ref2.drifter : void 0) === "active") {
+            return _this.set("is_drifter", true);
+          } else {
+            _this.set("is_drifter", false);
+            return _this.set("variable", (_ref3 = (_ref4 = e.state) != null ? _ref4.variable : void 0) != null ? _ref3 : "curr");
+          }
         };
       }
 
@@ -220,17 +232,25 @@ require(["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
 
       RomsContext.prototype.variableChanged = function(node) {
         var now;
-        if (this.get("variable") === $(node).attr("data-value")) {
-          return;
+        if ($(node).attr("data-value") === "drifter") {
+          this.set("is_drifter", true);
+          return history.pushState({
+            drifter: "active"
+          }, null, "/ca_roms?drifter=active");
+        } else {
+          if (this.get("variable") === $(node).attr("data-value") && !this.get("is_drifter")) {
+            return;
+          }
+          this.set("is_drifter", false);
+          now = new Date(latestROMS[this.get("region")][this.get("variable")]);
+          $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
+          this.set("endDate", now);
+          this.set("variable", $(node).attr("data-value"));
+          this.changeNow(this.get("now") > now ? now : this.get("now"));
+          return history.pushState({
+            variable: this.get("variable")
+          }, null, "/ca_roms?variable=" + (this.get("variable")));
         }
-        now = new Date(latestROMS[this.get("region")][this.get("variable")]);
-        $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
-        this.set("endDate", now);
-        this.set("variable", $(node).attr("data-value"));
-        this.changeNow(this.get("now") > now ? now : this.get("now"));
-        return history.pushState({
-          variable: this.get("variable")
-        }, null, "/ca_roms?variable=" + (this.get("variable")));
       };
 
       RomsContext.prototype.regionChanged = function(node) {

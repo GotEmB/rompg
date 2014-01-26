@@ -77,7 +77,7 @@ require ["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
 			for region of latestROMS then do (region) =>
 				@accessor "is_#{region}", -> @get("region") is region
 			for variable in ["curr", "salinity", "ssh", "temp"] then do (variable) =>
-				@accessor "is_#{variable}", -> @get("variable") is variable
+				@accessor "is_#{variable}", -> !@get("is_drifter") and @get("variable") is variable
 			
 			constructor: ->
 				super
@@ -88,6 +88,9 @@ require ["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
 				else
 					@set "variable", "curr"
 				@set "region", "ca" # Default region is set
+
+				# Drifter is set active if queryParam says so
+				@set "is_drifter", getParameterByName("drifter") is "active"
 
 				# Setup datepicker and time controls
 				now = new Date latestROMS[@get "region"][@get "variable"]
@@ -104,10 +107,17 @@ require ["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
 					now = new Date latestROMS[@get "region"][@get "variable"]
 					@changeNow now if @get("now") > now
 
-				# Set queryParam to current variable for consistency
-				history.replaceState variable: @get("variable"), null, "/ca_roms?variable=#{@get "variable"}"
+				# Set queryParam to current variable/drifter for consistency
+				if @get "is_drifter"
+					history.replaceState drifter: "active", null, "/ca_roms?drifter=active"
+				else
+					history.replaceState variable: @get("variable"), null, "/ca_roms?variable=#{@get "variable"}"
 				window.onpopstate = (e) =>
-					@set "variable", e.state?.variable ? "curr"
+					if e.state?.drifter is "active"
+						@set "is_drifter", true
+					else
+						@set "is_drifter", false
+						@set "variable", e.state?.variable ? "curr"
 
 			# When an hour is selected for Nowcast
 			timeChanged: (node) ->
@@ -132,13 +142,18 @@ require ["jquery", "Batman", "latestROMS", "leaflet", "bootstrap", "bootstrapDat
 
 			# When a variable is changed using provided tabs/pills
 			variableChanged: (node) ->
-				return if @get("variable") is $(node).attr "data-value"
-				now = new Date latestROMS[@get "region"][@get "variable"]
-				$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
-				@set "endDate", now
-				@set "variable", $(node).attr "data-value"
-				@changeNow if @get("now") > now then now else @get("now")
-				history.pushState variable: @get("variable"), null, "/ca_roms?variable=#{@get "variable"}"
+				if $(node).attr("data-value") is "drifter"
+					@set "is_drifter", true
+					history.pushState drifter: "active", null, "/ca_roms?drifter=active"
+				else
+					return if @get("variable") is $(node).attr("data-value") and not @get "is_drifter"
+					@set "is_drifter", false
+					now = new Date latestROMS[@get "region"][@get "variable"]
+					$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
+					@set "endDate", now
+					@set "variable", $(node).attr "data-value"
+					@changeNow if @get("now") > now then now else @get("now")
+					history.pushState variable: @get("variable"), null, "/ca_roms?variable=#{@get "variable"}"
 
 			# When a region is changed using the dropdown
 			regionChanged: (node) ->
