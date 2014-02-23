@@ -30,8 +30,15 @@ html(style = "height: 100%")
 							a(href = (thisPage == "home" ? "#" : "/")) Home
 						li(class = (thisPage == "people" ? "active" : ""))
 							a(href = (thisPage == "people" ? "#" : "/people")) People
-						li(class = (thisPage == "ca_roms" ? "active" : ""))
-							a(href = (thisPage == "ca_roms" ? "#" : "/ca_roms")) CA ROMS
+						li(class = (thisPage == "ca_roms" || thisPage == "pws_roms" ? "active" : ""))
+							a.dropdown-toggle(href = "#", data-toggle = "dropdown")
+								| Nowcast/Forecast&nbsp;
+								b.caret
+							ul.dropdown-menu
+								li(class = (thisPage == "ca_roms" ? "active" : ""))
+									a(href = (thisPage == "ca_roms" ? "#" : "/ca_roms")) CA ROMS
+								li(class = (thisPage == "pws_roms" ? "active" : ""))
+									a(href = (thisPage == "pws_roms" ? "#" : "/pws_roms")) PWS ROMS
 		block content
 		footer.site-footer(style = "background-color: #ECF0F1; position: absolute; bottom: 0; width: 100%")
 			.container
