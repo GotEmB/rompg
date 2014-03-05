@@ -11,6 +11,7 @@ require.config
 		bootstrapDatepicker: "/components/bootstrap-datepicker/js/bootstrap-datepicker"
 		batman: "/batmanjs/batman"
 		latestCARoms: "/latestCARoms.json?callback=define"
+		latestPWSRoms: "/latestPWSRoms.json?callback=define"
 		leaflet: "//cdn.leafletjs.com/leaflet-0.7.1/leaflet"
 		esriLeaflet: "/esri-leaflet/esri-leaflet"
 	shim:
@@ -75,7 +76,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 			for hour in [3, 9, 15, 21] then do (hour) =>
 				@accessor "is#{padTo2Digits hour}Selected", -> @get("now").getUTCHours() is hour
 				@accessor "is#{padTo2Digits hour}Enabled", -> if @get("endDate").getUTCHours() >= hour or new Date(@get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(@get("now")).setUTCHours(0, 0, 0, 0) then "" else "disabled"
-			for region of latestROMS then do (region) =>
+			for region of latestCAROMS then do (region) =>
 				@accessor "is_#{region}", -> @get("region") is region
 			for variable in ["curr", "salinity", "ssh", "temp"] then do (variable) =>
 				@accessor "is_#{variable}", -> !@get("is_drifter") and @get("variable") is variable
@@ -94,7 +95,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 				@set "is_drifter", getParameterByName("drifter") is "active"
 
 				# Setup datepicker and time controls
-				now = new Date latestROMS[@get "region"][@get "variable"]
+				now = new Date latestCAROMS[@get "region"][@get "variable"]
 				$("[data-provide=\"datepicker-inline\"]").datepicker "setStartDate", "04/24/2013"
 				$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
 				@set "endDate", now
@@ -105,7 +106,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 					now.setUTCMonth e.date.getMonth()
 					now.setUTCFullYear e.date.getFullYear()
 					@set "now", now
-					now = new Date latestROMS[@get "region"][@get "variable"]
+					now = new Date latestCAROMS[@get "region"][@get "variable"]
 					@changeNow now if @get("now") > now
 
 				# Set queryParam to current variable/drifter for consistency
@@ -130,7 +131,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 			changeNow: (date) ->
 				@set "now", date
 				$("[data-provide=\"datepicker-inline\"]").datepicker "update", "#{date.getUTCMonth() + 1}/#{date.getUTCDate()}/#{date.getUTCFullYear()}"
-				now = new Date latestROMS[@get "region"][@get "variable"]
+				now = new Date latestCAROMS[@get "region"][@get "variable"]
 				@changeNow now if @get("now") > now
 
 			# Imagery not found
@@ -149,7 +150,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 				else
 					return if @get("variable") is $(node).attr("data-value") and not @get "is_drifter"
 					@set "is_drifter", false
-					now = new Date latestROMS[@get "region"][@get "variable"]
+					now = new Date latestCAROMS[@get "region"][@get "variable"]
 					$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
 					@set "endDate", now
 					@set "variable", $(node).attr "data-value"
@@ -160,7 +161,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 			regionChanged: (node) ->
 				return if @get("region") is $(node).attr "data-value"
 				@set "region", $(node).attr "data-value"
-				now = new Date latestROMS[@get "region"][@get "variable"]
+				now = new Date latestCAROMS[@get "region"][@get "variable"]
 				$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
 				@set "endDate", now
 				@changeNow if @get("now") > now then now else @get("now")
@@ -179,7 +180,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 			for hour in [3, 9, 15, 21] then do (hour) =>
 				@accessor "is#{padTo2Digits hour}Selected", -> @get("now").getUTCHours() is hour
 				@accessor "is#{padTo2Digits hour}Enabled", -> if @get("endDate").getUTCHours() >= hour or new Date(@get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(@get("now")).setUTCHours(0, 0, 0, 0) then "" else "disabled"
-			for region of latestROMS then do (region) =>
+			for region of latestCAROMS then do (region) =>
 				@accessor "is_#{region}", -> @get("region") is region
 			for variable in ["curr", "salinity", "ssh", "temp"] then do (variable) =>
 				@accessor "is_#{variable}", -> !@get("is_drifter") and @get("variable") is variable
@@ -198,7 +199,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 				@set "is_drifter", getParameterByName("drifter") is "active"
 
 				# Setup datepicker and time controls
-				now = new Date latestROMS[@get "region"][@get "variable"]
+				now = new Date latestCAROMS[@get "region"][@get "variable"]
 				$("[data-provide=\"datepicker-inline\"]").datepicker "setStartDate", "04/24/2013"
 				$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
 				@set "endDate", now
@@ -209,7 +210,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 					now.setUTCMonth e.date.getMonth()
 					now.setUTCFullYear e.date.getFullYear()
 					@set "now", now
-					now = new Date latestROMS[@get "region"][@get "variable"]
+					now = new Date latestPWSROMS[@get "region"][@get "variable"]
 					@changeNow now if @get("now") > now
 
 				# Set queryParam to current variable/drifter for consistency
@@ -230,7 +231,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 			changeNow: (date) ->
 				@set "now", date
 				$("[data-provide=\"datepicker-inline\"]").datepicker "update", "#{date.getUTCMonth() + 1}/#{date.getUTCDate()}/#{date.getUTCFullYear()}"
-				now = new Date latestROMS[@get "region"][@get "variable"]
+				now = new Date latestPWSROMS[@get "region"][@get "variable"]
 				@changeNow now if @get("now") > now
 
 			# Imagery not found
@@ -244,7 +245,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 			# When a variable is changed using provided tabs/pills
 			variableChanged: (node) ->
 				return if @get("variable") is $(node).attr("data-value")
-				now = new Date latestROMS[@get "region"][@get "variable"]
+				now = new Date latestPWSROMS[@get "region"][@get "variable"]
 				$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
 				@set "endDate", now
 				@set "variable", $(node).attr "data-value"
@@ -256,7 +257,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 				return if @get("region") is $(node).attr "data-value"
 				@set "region", $(node).attr "data-value"
 				@set "rindex", $(node).attr "data-rindex"
-				now = new Date latestROMS[@get "region"][@get "variable"]
+				now = new Date latestPWSROMS[@get "region"][@get "variable"]
 				$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
 				@set "endDate", now
 				@changeNow if @get("now") > now then now else @get("now")
