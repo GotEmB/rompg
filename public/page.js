@@ -78,7 +78,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
         this.set("romsCAContext", new this.RomsCAContext);
       }
       if (window.location.pathname === "/pws_roms") {
-        this.set("romsPWSContext", new this.RomsCAContext);
+        this.set("romsPWSContext", new this.RomsPWSContext);
       }
       if (window.location.pathname === "/interactive") {
         this.set("interactiveContext", new this.InteractiveContext);
