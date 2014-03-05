@@ -94,7 +94,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
         _ref = ["curr", "salinity", "ssh", "temp"];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           variable = _ref[_i];
-          now = new Date(latestROMS.ca[variable]);
+          now = new Date(latestRoms.ca[variable]);
           this.set("latestCaRomsImagePath_" + variable, "/data/ca-roms/" + (now.getUTCFullYear()) + "/" + (padTo2Digits(now.getUTCMonth() + 1)) + "/ca_" + variable + (padTo2Digits(now.getUTCMonth() + 1)) + (padTo2Digits(now.getUTCDate())) + "_" + (padTo2Digits(now.getUTCHours())) + "_0.jpg");
         }
       }
@@ -146,7 +146,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
           return this.get("region") === region;
         });
       };
-      for (region in latestCAROMS) {
+      for (region in latestCARoms) {
         _fn1(region);
       }
 
@@ -171,7 +171,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
         }
         this.set("region", "ca");
         this.set("is_drifter", getParameterByName("drifter") === "active");
-        now = new Date(latestCAROMS[this.get("region")][this.get("variable")]);
+        now = new Date(latestCARoms[this.get("region")][this.get("variable")]);
         $("[data-provide=\"datepicker-inline\"]").datepicker("setStartDate", "04/24/2013");
         $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
         this.set("endDate", now);
@@ -183,7 +183,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
             now.setUTCMonth(e.date.getMonth());
             now.setUTCFullYear(e.date.getFullYear());
             _this.set("now", now);
-            now = new Date(latestCAROMS[_this.get("region")][_this.get("variable")]);
+            now = new Date(latestCARoms[_this.get("region")][_this.get("variable")]);
             if (_this.get("now") > now) {
               return _this.changeNow(now);
             }
@@ -222,7 +222,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
         var now;
         this.set("now", date);
         $("[data-provide=\"datepicker-inline\"]").datepicker("update", "" + (date.getUTCMonth() + 1) + "/" + (date.getUTCDate()) + "/" + (date.getUTCFullYear()));
-        now = new Date(latestCAROMS[this.get("region")][this.get("variable")]);
+        now = new Date(latestCARoms[this.get("region")][this.get("variable")]);
         if (this.get("now") > now) {
           return this.changeNow(now);
         }
@@ -248,7 +248,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
             return;
           }
           this.set("is_drifter", false);
-          now = new Date(latestCAROMS[this.get("region")][this.get("variable")]);
+          now = new Date(latestCARoms[this.get("region")][this.get("variable")]);
           $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
           this.set("endDate", now);
           this.set("variable", $(node).attr("data-value"));
@@ -265,7 +265,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
           return;
         }
         this.set("region", $(node).attr("data-value"));
-        now = new Date(latestCAROMS[this.get("region")][this.get("variable")]);
+        now = new Date(latestCARoms[this.get("region")][this.get("variable")]);
         $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
         this.set("endDate", now);
         return this.changeNow(this.get("now") > now ? now : this.get("now"));
@@ -318,7 +318,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
           return this.get("region") === region;
         });
       };
-      for (region in latestCAROMS) {
+      for (region in latestCARoms) {
         _fn1(region);
       }
 
@@ -343,7 +343,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
         }
         this.set("region", "goa");
         this.set("is_drifter", getParameterByName("drifter") === "active");
-        now = new Date(latestCAROMS[this.get("region")][this.get("variable")]);
+        now = new Date(latestCARoms[this.get("region")][this.get("variable")]);
         $("[data-provide=\"datepicker-inline\"]").datepicker("setStartDate", "04/24/2013");
         $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
         this.set("endDate", now);
@@ -355,7 +355,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
             now.setUTCMonth(e.date.getMonth());
             now.setUTCFullYear(e.date.getFullYear());
             _this.set("now", now);
-            now = new Date(latestPWSROMS[_this.get("region")][_this.get("variable")]);
+            now = new Date(latestPWSRoms[_this.get("region")][_this.get("variable")]);
             if (_this.get("now") > now) {
               return _this.changeNow(now);
             }
@@ -385,7 +385,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
         var now;
         this.set("now", date);
         $("[data-provide=\"datepicker-inline\"]").datepicker("update", "" + (date.getUTCMonth() + 1) + "/" + (date.getUTCDate()) + "/" + (date.getUTCFullYear()));
-        now = new Date(latestPWSROMS[this.get("region")][this.get("variable")]);
+        now = new Date(latestPWSRoms[this.get("region")][this.get("variable")]);
         if (this.get("now") > now) {
           return this.changeNow(now);
         }
@@ -404,7 +404,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
         if (this.get("variable") === $(node).attr("data-value")) {
           return;
         }
-        now = new Date(latestPWSROMS[this.get("region")][this.get("variable")]);
+        now = new Date(latestPWSRoms[this.get("region")][this.get("variable")]);
         $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
         this.set("endDate", now);
         this.set("variable", $(node).attr("data-value"));
@@ -421,7 +421,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
         }
         this.set("region", $(node).attr("data-value"));
         this.set("rindex", $(node).attr("data-rindex"));
-        now = new Date(latestPWSROMS[this.get("region")][this.get("variable")]);
+        now = new Date(latestPWSRoms[this.get("region")][this.get("variable")]);
         $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
         this.set("endDate", now);
         return this.changeNow(this.get("now") > now ? now : this.get("now"));
