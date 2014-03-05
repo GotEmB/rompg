@@ -14,6 +14,7 @@ web.configure ->
 	web.use express.bodyParser()
 	web.use express.static "#{__dirname}/public", maxAge: 0, (err) -> console.log "Static: #{err}" # HTTP GET <Static files>
 	web.use "/data/ca-roms", express.static process.env.CAROMS_DIR, maxAge: 0, (err) -> console.log "Static: #{err}" # HTTP GET <Nowcast images>
+	web.use "/data/myocean", express.static process.env.MYOCEAN_DIR, maxAge: 0, (err) -> console.log "Static: #{err}" # HTTP GET <CA Nowcast images>
 	web.set "views", "#{__dirname}/views" # Using jade templates
 	web.set "view engine", "jade" # Set template engine to jade
 	web.use web.router
@@ -22,13 +23,21 @@ web.configure ->
 web.get "/", (req, res) ->
 	res.render "home"
 
-# HTTP GET '/roms'
+# HTTP GET '/ca_roms'
 web.get "/ca_roms", (req, res) ->
-	res.render "ca_roms", availableRegions: core.getAvailableRegions()
+	res.render "ca_roms", availableRegions: core.getAvailableCARegions()
 
-# HTTP GET '/latestROMS.json'
-web.get "/latestROMS.json", (req, res) ->
-	res.jsonp core.getLatestROMS()
+# HTTP GET '/latestCARoms.json'
+web.get "/latestCARoms.json", (req, res) ->
+	res.jsonp core.getLatestCARoms()
+
+# HTTP GET '/pws_roms'
+web.get "/pws_roms", (req, res) ->
+	res.render "pws_roms", availableRegions: core.getAvailablePWSRegions()
+
+# HTTP GET '/latestPWSRoms.json'
+web.get "/latestPWSRoms.json", (req, res) ->
+	res.jsonp core.getLatestPWSRoms()
 
 # HTTP GET <Any other page>
 web.get /\/([a-z]+)/, (req, res, next) ->
