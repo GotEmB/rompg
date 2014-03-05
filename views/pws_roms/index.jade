@@ -1,8 +1,8 @@
 extends ../layout
 
 block vars
-	- var pageTitle = "CA ROMS · Regional Ocean Modeling and Prediction Group"
-	- var thisPage = "ca_roms"
+	- var pageTitle = "PWS ROMS · Regional Ocean Modeling and Prediction Group"
+	- var thisPage = "pws_roms"
 
 block content
 	mixin desc_content
@@ -55,7 +55,7 @@ block content
 											i.fa.fa-caret-down
 										ul.dropdown-menu(role = "menu")
 											- each region in availableRegions
-												li(data-value = region.shortCode, data-event-click = "appContext.romsContext.regionChanged", data-addclass-active = "is_" + region.shortCode)
+												li(data-value = region.shortCode, data-rindex = region.rindex, data-event-click = "appContext.romsContext.regionChanged", data-addclass-active = "is_" + region.shortCode)
 													a(href = "#")= region.longName
 									hr(style = "margin: 10px")
 									.text-center
