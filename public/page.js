@@ -288,7 +288,7 @@ require(["jquery", "Batman", "latestCARoms", "latestPWSRoms", "leaflet", "bootst
       };
 
       RomsPWSContext.accessor("imgPath", function() {
-        return "/data/myocean/PWS-nowcast-l" + (this.get("rindex")) + "/images/" + (this.get("now").getUTCFullYear()) + "/" + (padTo2Digits(now.getUTCMonth() + 1)) + "/" + (this.get("region")) + "_" + (this.get("variable")) + (padTo2Digits(this.get("now").getUTCMonth() + 1)) + (padTo2Digits(this.get("now").getUTCDate())) + "_" + (padTo2Digits(this.get("now").getUTCHours())) + "_0.jpg";
+        return "/data/myocean/PWS-nowcast-l" + (this.get("rindex")) + "/images/" + (this.get("now").getUTCFullYear()) + "/" + (padTo2Digits(this.get("now").getUTCMonth() + 1)) + "/" + (this.get("region")) + "_" + (this.get("variable")) + (padTo2Digits(this.get("now").getUTCMonth() + 1)) + (padTo2Digits(this.get("now").getUTCDate())) + "_" + (padTo2Digits(this.get("now").getUTCHours())) + "_0.jpg";
       });
 
       RomsPWSContext.accessor("regionLongName", function() {
