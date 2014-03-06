@@ -362,6 +362,9 @@ require(["jquery", "Batman", "latestCARoms", "latestPWSRoms", "leaflet", "bootst
             }
           };
         })(this));
+        history.replaceState({
+          variable: this.get("variable")
+        }, null, "/ca_roms?variable=" + (this.get("variable")));
         window.onpopstate = (function(_this) {
           return function(e) {
             var _ref2, _ref3, _ref4;

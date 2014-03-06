@@ -214,6 +214,8 @@ require ["jquery", "Batman", "latestCARoms", "latestPWSRoms", "leaflet", "bootst
 					now = new Date latestPWSRoms[@get "region"][@get "variable"]
 					@changeNow now if @get("now") > now
 
+				history.replaceState variable: @get("variable"), null, "/ca_roms?variable=#{@get "variable"}"
+				
 				# Set queryParam to current variable/drifter for consistency
 				window.onpopstate = (e) =>
 					if e.state?.drifter is "active"
