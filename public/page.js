@@ -318,7 +318,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
           return this.get("region") === region;
         });
       };
-      for (region in latestCARoms) {
+      for (region in latestPWSRoms) {
         _fn1(region);
       }
 
@@ -343,7 +343,7 @@ require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
         }
         this.set("region", "goa");
         this.set("is_drifter", getParameterByName("drifter") === "active");
-        now = new Date(latestCARoms[this.get("region")][this.get("variable")]);
+        now = new Date(latestPWSRoms[this.get("region")][this.get("variable")]);
         $("[data-provide=\"datepicker-inline\"]").datepicker("setStartDate", "04/24/2013");
         $("[data-provide=\"datepicker-inline\"]").datepicker("setEndDate", "" + (now.getUTCMonth() + 1) + "/" + (now.getUTCDate()) + "/" + (now.getUTCFullYear()));
         this.set("endDate", now);

@@ -180,7 +180,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 			for hour in [3, 9, 15, 21] then do (hour) =>
 				@accessor "is#{padTo2Digits hour}Selected", -> @get("now").getUTCHours() is hour
 				@accessor "is#{padTo2Digits hour}Enabled", -> if @get("endDate").getUTCHours() >= hour or new Date(@get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(@get("now")).setUTCHours(0, 0, 0, 0) then "" else "disabled"
-			for region of latestCARoms then do (region) =>
+			for region of latestPWSRoms then do (region) =>
 				@accessor "is_#{region}", -> @get("region") is region
 			for variable in ["curr", "salinity", "ssh", "temp"] then do (variable) =>
 				@accessor "is_#{variable}", -> !@get("is_drifter") and @get("variable") is variable
@@ -199,7 +199,7 @@ require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapD
 				@set "is_drifter", getParameterByName("drifter") is "active"
 
 				# Setup datepicker and time controls
-				now = new Date latestCARoms[@get "region"][@get "variable"]
+				now = new Date latestPWSRoms[@get "region"][@get "variable"]
 				$("[data-provide=\"datepicker-inline\"]").datepicker "setStartDate", "04/24/2013"
 				$("[data-provide=\"datepicker-inline\"]").datepicker "setEndDate", "#{now.getUTCMonth() + 1}/#{now.getUTCDate()}/#{now.getUTCFullYear()}"
 				@set "endDate", now
