@@ -46,7 +46,7 @@ define("Batman", ["batman"], function(Batman) {
   return Batman.DOM.readers.batmantarget = Batman.DOM.readers.target && delete Batman.DOM.readers.target && Batman;
 });
 
-require(["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapDatepicker", "esriLeaflet"], function($, Batman, latestCARoms, L) {
+require(["jquery", "Batman", "latestCARoms", "latestPWSRoms", "leaflet", "bootstrap", "bootstrapDatepicker", "esriLeaflet"], function($, Batman, latestCARoms, latestPWSRoms, L) {
   var AppContext, Rompg, getParameterByName, padTo2Digits;
   padTo2Digits = function(n) {
     if (n < 10) {

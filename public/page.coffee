@@ -29,7 +29,7 @@ appContext = undefined
 define "Batman", ["batman"], (Batman) -> Batman.DOM.readers.batmantarget = Batman.DOM.readers.target and delete Batman.DOM.readers.target and Batman
 
 # Main Function that'll run once all modules are loaded
-require ["jquery", "Batman", "latestCARoms", "leaflet", "bootstrap", "bootstrapDatepicker", "esriLeaflet"], ($, Batman, latestCARoms, L) ->
+require ["jquery", "Batman", "latestCARoms", "latestPWSRoms", "leaflet", "bootstrap", "bootstrapDatepicker", "esriLeaflet"], ($, Batman, latestCARoms, latestPWSRoms, L) ->
 
 	# Pad Digits. Ex. 1 -> 01; 10 -> 10
 	padTo2Digits = (n) -> if n < 10 then "0" + n else n
