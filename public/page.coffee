@@ -177,7 +177,7 @@ require ["jquery", "Batman", "latestCARoms", "latestPWSRoms", "leaflet", "bootst
 			# Setup property accessors
 			@accessor "imgPath", -> "/data/myocean/PWS-nowcast-l#{@get("rindex")}/images/#{@get("now").getUTCFullYear()}/#{padTo2Digits @get("now").getUTCMonth() + 1}/#{@get "region"}_#{@get "variable"}#{padTo2Digits @get("now").getUTCMonth() + 1}#{padTo2Digits @get("now").getUTCDate()}_#{padTo2Digits @get("now").getUTCHours()}_0.jpg"
 			@accessor "regionLongName", -> $("ul>li[data-value=\"#{@get "region"}\"]>a").text()
-			for hour in [3, 9, 15, 21] then do (hour) =>
+			for hour in [0, 6, 12, 18] then do (hour) =>
 				@accessor "is#{padTo2Digits hour}Selected", -> @get("now").getUTCHours() is hour
 				@accessor "is#{padTo2Digits hour}Enabled", -> if @get("endDate").getUTCHours() >= hour or new Date(@get("endDate")).setUTCHours(0, 0, 0, 0) > new Date(@get("now")).setUTCHours(0, 0, 0, 0) then "" else "disabled"
 			for region of latestPWSRoms then do (region) =>

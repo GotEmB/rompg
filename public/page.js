@@ -295,7 +295,7 @@ require(["jquery", "Batman", "latestCARoms", "latestPWSRoms", "leaflet", "bootst
         return $("ul>li[data-value=\"" + (this.get("region")) + "\"]>a").text();
       });
 
-      _ref = [3, 9, 15, 21];
+      _ref = [0, 6, 12, 18];
       _fn = function(hour) {
         RomsPWSContext.accessor("is" + (padTo2Digits(hour)) + "Selected", function() {
           return this.get("now").getUTCHours() === hour;
