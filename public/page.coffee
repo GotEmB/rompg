@@ -175,7 +175,7 @@ require ["jquery", "Batman", "latestCARoms", "latestPWSRoms", "leaflet", "bootst
 				temp: "Temperature and Current"
 			
 			# Setup property accessors
-			@accessor "imgPath", -> "/data/myocean/PWS-nowcast-l#{@get("rindex")}/images/#{@get("now").getUTCFullYear()}/#{@get "region"}_#{@get "variable"}#{padTo2Digits @get("now").getUTCMonth() + 1}#{padTo2Digits @get("now").getUTCDate()}_#{padTo2Digits @get("now").getUTCHours()}_0.jpg"
+			@accessor "imgPath", -> "/data/myocean/PWS-nowcast-l#{@get("rindex")}/images/#{@get("now").getUTCFullYear()}/#{padTo2Digits now.getUTCMonth() + 1}/#{@get "region"}_#{@get "variable"}#{padTo2Digits @get("now").getUTCMonth() + 1}#{padTo2Digits @get("now").getUTCDate()}_#{padTo2Digits @get("now").getUTCHours()}_0.jpg"
 			@accessor "regionLongName", -> $("ul>li[data-value=\"#{@get "region"}\"]>a").text()
 			for hour in [3, 9, 15, 21] then do (hour) =>
 				@accessor "is#{padTo2Digits hour}Selected", -> @get("now").getUTCHours() is hour
@@ -194,6 +194,7 @@ require ["jquery", "Batman", "latestCARoms", "latestPWSRoms", "leaflet", "bootst
 				else
 					@set "variable", "curr"
 				@set "region", "goa" # Default region is set
+				@set "rindex", 0
 
 				# Drifter is set active if queryParam says so
 				@set "is_drifter", getParameterByName("drifter") is "active"
