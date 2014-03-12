@@ -59,7 +59,7 @@ require ["jquery", "Batman", "latestCARoms", "latestPWSRoms", "leaflet", "bootst
 
 				# Set paths for each of the four imagery shown on the homepage
 				for variable in ["curr", "salinity", "ssh", "temp"]
-					now = new Date latestCARoms[variable]
+					now = new Date latestCARoms.ca[variable]
 					@set "latestCaRomsImagePath_#{variable}", "/data/ca-roms/#{now.getUTCFullYear()}/#{padTo2Digits now.getUTCMonth() + 1}/ca_#{variable}#{padTo2Digits now.getUTCMonth() + 1}#{padTo2Digits now.getUTCDate()}_#{padTo2Digits now.getUTCHours()}_0.jpg"
 
 		# Page Model for HTTP GET '/ca_roms'
