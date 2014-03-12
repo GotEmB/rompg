@@ -94,7 +94,7 @@ require(["jquery", "Batman", "latestCARoms", "latestPWSRoms", "leaflet", "bootst
         _ref = ["curr", "salinity", "ssh", "temp"];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           variable = _ref[_i];
-          now = new Date(latestRoms.ca[variable]);
+          now = new Date(latestCARoms[variable]);
           this.set("latestCaRomsImagePath_" + variable, "/data/ca-roms/" + (now.getUTCFullYear()) + "/" + (padTo2Digits(now.getUTCMonth() + 1)) + "/ca_" + variable + (padTo2Digits(now.getUTCMonth() + 1)) + (padTo2Digits(now.getUTCDate())) + "_" + (padTo2Digits(now.getUTCHours())) + "_0.jpg");
         }
       }
